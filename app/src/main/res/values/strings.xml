@@ -1,0 +1,68 @@
+<resources>
+    <string name="app_name">FineSTT</string>
+    <string name="debounce_time_millis">Debounce Time: %s ms</string>
+    <string name="title_activity_main2" translatable="false">MainActivity</string>
+
+    <!-- Strings used for fragments for navigation -->
+    <string name="main_fragment_label" translatable="false">@string/app_name</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="key_action_types_next">Next</string>
+    <string name="key_action_types_prev">Prev</string>
+    <string name="key_action_types_pause">Pause</string>
+    <string name="key_action_types_play">Play</string>
+    <string name="key_action_types_playpause">Play/Pause</string>
+
+    <string name="settings_key_start_on_boot_enabled" translatable="false">start_on_boot_enabled</string>
+    <string name="settings_key_display_log_level" translatable="false">display_log_level</string>
+    <string name="settings_key_input_key_debounce_millis" translatable="false">input_key_debounce_millis</string>
+    <string name="settings_key_display_input_event_only" translatable="false">display_input_event_only</string>
+    <string name="settings_key_bindings_json" translatable="false">bindings_json</string>
+    <string name="settings_key_binding_compare_method" translatable="false">binding_compare_method</string>
+    <string name="settings_key_ui_language" translatable="false">ui_language</string>
+    <string name="settings_key_simulate_key_input" translatable="false">simulate_key_input</string>
+    <string name="settings_key_check_if_app_is_running" translatable="false">check_if_app_is_running</string>
+    <string name="settings_key_show_toast_messages_for_media_actions" translatable="false">check_if_app_is_running</string>
+    <string name="settings_key_multiple_keys_per_action_allowed" translatable="false">multiple_keys_per_action_allowed</string>
+    <string name="settings_key_version" translatable="false">settings_key_version</string>
+    <string name="settings_summary_simulate_key_input" translatable="false">example: adb shell am broadcast -a com.rosi.masts.test.SIMULATE_MCU_KEY_INPUT --eia key -63,1,2,3,4,5</string>
+    <string name="settings_title_appearance">Appearance</string>
+    <string name="settings_title_language">Language</string>
+    <string name="settings_title_simulate_key_input">Simulate Key Input</string>
+    <string name="settings_title_check_if_app_is_running">Send action only if running</string>
+    <string name="settings_title_show_toast_messages_for_media_actions">Show toast messages</string>
+    <string name="settings_title_input_key_debounce_millis">Debounce Time [ms]</string>
+    <string name="settings_title_binding_compare_method">Compare Method</string>
+    <string name="settings_title_start_on_boot_enabled">Start on boot</string>
+    <string name="settings_title_multiple_keys_per_action_allowed">Multiple keys per action</string>
+    <string name="settings_preference_category_boot">Boot</string>
+    <string name="settings_preference_category_keys">Keys</string>
+    <string name="settings_preference_category_applications">Applications</string>
+    <string name="settings_preference_category_debug">Debug</string>
+    <string name="settings_title">Settings</string>
+
+    <string name="service_status">Service Status</string>
+    <string name="permissions_required_dialog_title">Permissions Required</string>
+    <string name="permissions_required_for_notifications_text">Permission to access notifications is required. Click on settings to open the settings screen from there you can allow the permission for this app.</string>
+    <string name="rebind">Rebind</string>
+    <string name="delete">Delete</string>
+    <string name="service_is_running">Service Running</string>
+    <string name="stop_service">Stop</string>
+    <string name="service_stopped">Service Stopped</string>
+    <string name="start_service">Start</string>
+    <string name="action_bound_to_key_template">%s bound to key %s</string>
+    <string name="bound_actions">Bound Actions</string>
+    <string name="no_action_bindings_exists">No action bindings exists</string>
+    <string name="key_binding_select_action_screen_title">Key Binding: Select Action</string>
+    <string name="select_from_available_actions">Select from available actions:</string>
+    <string name="no_action_selected_message">Please select an action</string>
+    <string name="no_action_available">No action available</string>
+    <string name="key_binding_select_key_screen_title">Key Binding: Select a Key</string>
+    <string name="bind_success_message">Bind successfully</string>
+    <string name="press_a_key_text">PRESS A KEY</string>
+    <string name="bind_button_text">Bind</string>
+    <string name="restart_to_apply_changes">Restart to apply changes</string>
+    <string name="restart">restart</string>
+
+</resources>

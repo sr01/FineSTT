@@ -1,0 +1,70 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory android:title="@string/settings_title_appearance">
+        <ListPreference
+            android:key="@string/settings_key_ui_language"
+            android:title="@string/settings_title_language" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/settings_preference_category_boot">
+
+        <SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:key="@string/settings_key_start_on_boot_enabled"
+            android:title="@string/settings_title_start_on_boot_enabled" />
+
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/settings_preference_category_keys">
+
+        <ListPreference
+            android:defaultValue="2"
+            android:entries="@array/key_compare_methods_entries"
+            android:entryValues="@array/key_compare_methods_values"
+            android:key="@string/settings_key_binding_compare_method"
+            android:title="@string/settings_title_binding_compare_method"
+            app:useSimpleSummaryProvider="true" />
+
+        <EditTextPreference
+            android:defaultValue="150"
+            android:inputType="number"
+            android:key="@string/settings_key_input_key_debounce_millis"
+            android:title="@string/settings_title_input_key_debounce_millis"
+            app:useSimpleSummaryProvider="true" />
+
+        <SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:key="@string/settings_key_multiple_keys_per_action_allowed"
+            android:title="@string/settings_title_multiple_keys_per_action_allowed" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/settings_preference_category_applications">
+        <SwitchPreferenceCompat
+            android:defaultValue="true"
+            android:key="@string/settings_key_check_if_app_is_running"
+            android:title="@string/settings_title_check_if_app_is_running" />
+
+        <SwitchPreferenceCompat
+            android:defaultValue="true"
+            android:key="@string/settings_key_show_toast_messages_for_media_actions"
+            android:title="@string/settings_title_show_toast_messages_for_media_actions" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/settings_preference_category_debug">
+
+        <SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:key="@string/settings_key_simulate_key_input"
+            android:summary="@string/settings_summary_simulate_key_input"
+            android:title="@string/settings_title_simulate_key_input" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="Version">
+        <Preference android:title="0.0.0.0" android:key="@string/settings_key_version"/>
+    </PreferenceCategory>
+</PreferenceScreen>

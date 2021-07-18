@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">FineSTT</string>
+    <string name="debounce_time_millis">זמן השהייה בין לחיצות: %s ms</string>
+    <string name="next">הבא</string>
+    <string name="previous">הקודם</string>
+    <string name="settings_title_appearance">תצוגה</string>
+    <string name="settings_title_language">שפה</string>
+    <string name="settings_title_simulate_key_input">סימולצית מקשים</string>
+    <string name="settings_title_check_if_app_is_running">הפעל רק אם אפליקציה פועלת</string>
+    <string name="settings_title_show_toast_messages_for_media_actions">הצג הודעה על פעולה</string>
+    <string name="settings_title_input_key_debounce_millis">זמן השהייה בין לחיצות [ms]</string>
+    <string name="settings_title_binding_compare_method">שיטת השוואה</string>
+    <string name="settings_title_start_on_boot_enabled">הפעל אוטומטית באיתחול</string>
+    <string name="settings_title_multiple_keys_per_action_allowed">מספר מקשים לפעולה</string>
+    <string name="settings_preference_category_boot">איתחול</string>
+    <string name="settings_preference_category_keys">מקשים</string>
+    <string name="settings_preference_category_applications">אפליקציות</string>
+    <string name="settings_preference_category_debug">דיבאג</string>
+    <string name="settings_title">הגדרות</string>
+
+    <string name="key_action_types_next">הבא</string>
+    <string name="key_action_types_prev">הקודם</string>
+    <string name="key_action_types_pause">הפסק</string>
+    <string name="key_action_types_play">נגן</string>
+    <string name="key_action_types_playpause">הפסק/נגן</string>
+
+    <string name="service_status">מצב פעולת השירות</string>
+    <string name="permissions_required_dialog_title">הרשאה נדרשת</string>
+    <string name="permissions_required_for_notifications_text">נדרשת הרשאת גישה להודעות. לחץ על כפתור ההגדרות כדי לפתוח את מסך ההגדרות ומשם תוכל לתת הרשאה לאפליקציה.</string>
+    <string name="rebind">מפה מחדש</string>
+    <string name="delete">מחק</string>
+    <string name="service_is_running">השירות פועל</string>
+    <string name="stop_service">הפסק</string>
+    <string name="service_stopped">השירות מופסק</string>
+    <string name="start_service">הפעל</string>
+    <string name="action_bound_to_key_template">%s ממופה למקש %s</string>
+    <string name="bound_actions">פעולות ממופות</string>
+    <string name="no_action_bindings_exists">לא קיים מיפוי פעולות</string>
+    <string name="key_binding_select_action_screen_title">מיפוי מקשים: בחר פעולה</string>
+    <string name="select_from_available_actions">בחר פעולה מבין הפעולות הזמינות:</string>
+    <string name="no_action_selected_message">אנא בחר פעולה</string>
+    <string name="no_action_available">אין פעולה זמינה</string>
+    <string name="key_binding_select_key_screen_title">מיפוי מקשים: בחר מקש</string>
+    <string name="bind_success_message">מיפוי נוצר בהצלחה!</string>
+    <string name="press_a_key_text">לחץ על מקש</string>
+    <string name="bind_button_text">מיפוי</string>
+    <string name="restart_to_apply_changes">הפעל מחדש כדי ליישם שינויים</string>
+    <string name="restart">הפעל מחדש</string>
+</resources>
