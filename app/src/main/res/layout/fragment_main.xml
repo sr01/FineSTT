@@ -26,7 +26,9 @@
                     android:id="@+id/text_service_status_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="16dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginTop="8dp"
                     android:text="@string/service_status"
                     android:textColor="?attr/colorControlNormal"
                     android:textSize="12sp"
@@ -61,14 +63,17 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:barrierDirection="bottom"
-                    app:barrierMargin="30dp"
+                    app:barrierMargin="0dp"
                     app:constraint_referenced_ids="text_service_status, button_start_service" />
 
                 <TextView
                     android:id="@+id/text_configured_actions"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="16dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:layout_marginTop="8dp"
                     android:text="@string/bound_actions"
                     android:textColor="?attr/colorControlNormal"
                     android:textSize="12sp"
@@ -80,8 +85,10 @@
                     android:id="@+id/recycler_view"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_margin="16dp"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:layout_marginTop="8dp"
                     app:flexWrap="wrap"
                     app:justifyContent="center"
                     app:layoutManager="com.google.android.flexbox.FlexboxLayoutManager"
@@ -90,7 +97,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/text_configured_actions"
                     tools:itemCount="4"
-                    tools:listitem="@layout/item_keyaction_chip" />
+                    tools:listitem="@layout/item_action_multiple_keys" />
 
                 <TextView
                     android:id="@+id/text_no_action_bindings_exist"

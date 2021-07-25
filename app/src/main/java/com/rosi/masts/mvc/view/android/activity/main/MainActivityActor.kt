@@ -10,6 +10,7 @@ import com.rosi.masts.mvc.model.keybinding.KeyActionBinding
 import com.rosi.masts.mvc.view.resources.StringsProvider
 import com.rosi.masts.mvc.view.ViewManager
 import com.rosi.masts.mvc.view.android.activity.keybinding.ActionViewData
+import com.rosi.masts.mvc.view.android.activity.keybinding.ActionWithMultipleKeysViewData
 import com.rosi.masts.utils.Logger
 import kotlinx.coroutines.CoroutineScope
 
@@ -69,6 +70,7 @@ class MainActivityActor(
     }
 
     private fun getKeyActionBindingsMessage(bindings: Collection<KeyActionBinding>) {
+
         val keyActionViewDataList = bindings.map { binding ->
             ActionViewData(
                 bindingID = binding.id,
@@ -77,7 +79,16 @@ class MainActivityActor(
                 isSelected = false,
                 boundKeyName = binding.key.displayName)
         }
-        listeners.forEach { it.onShowActions(keyActionViewDataList) }
+
+        val actionViewMultipleKeysData = keyActionViewDataList.groupBy { it.action }
+            .map {
+                ActionWithMultipleKeysViewData(
+                    action = it.key,
+                    displayName = stringsProvider.getDisplayNameForKeyActionType(it.key),
+                    keys = it.value.toMutableList())
+            }
+
+        listeners.forEach { it.onShowActions(actionViewMultipleKeysData) }
     }
 
     private fun removeKeyActionBindingMessage(message: RemoveKeyActionBindingMessage, removedBindings: Collection<KeyActionBinding>) {
@@ -89,7 +100,7 @@ class MainActivityActor(
 
     interface Listener {
         fun onServiceStatusChanged(isRunning: Boolean)
-        fun onShowActions(actions: Collection<ActionViewData>)
+        fun onShowActions(actions: Collection<ActionWithMultipleKeysViewData>)
         fun onActionsRemoved(bindingsIDs: Collection<String>)
     }
 }

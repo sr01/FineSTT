@@ -17,8 +17,9 @@ import com.rosi.masts.databinding.FragmentMainBinding
 import com.rosi.masts.di.controller
 import com.rosi.masts.di.dependencyProvider
 import com.rosi.masts.mvc.view.android.activity.keybinding.ActionViewData
+import com.rosi.masts.mvc.view.android.activity.keybinding.ActionWithMultipleKeysViewData
 import com.rosi.masts.mvc.view.android.activity.keybinding.KeyBindingActivityOperations
-import com.rosi.masts.mvc.view.android.adapters.ActionViewDataAdapter
+import com.rosi.masts.mvc.view.android.adapters.ActionWithMultipleKeysAdapter
 import com.rosi.masts.mvc.view.android.service.AppControlService
 import com.rosi.masts.mvc.view.android.service.MediaNotificationListenerService
 import com.rosi.masts.utils.Logger
@@ -29,7 +30,7 @@ class MainFragment : Fragment(), MainActivityActor.Listener {
     private lateinit var logger: Logger
     private lateinit var binding: FragmentMainBinding
     private lateinit var actor: MainActivityActor
-    private lateinit var actionsAdapter: ActionViewDataAdapter
+    private lateinit var actionsAdapter: ActionWithMultipleKeysAdapter
     private var isServiceRunning = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -62,7 +63,7 @@ class MainFragment : Fragment(), MainActivityActor.Listener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        actionsAdapter = ActionViewDataAdapter(false) { onActionItemSelectionChanged(it) }
+        actionsAdapter = ActionWithMultipleKeysAdapter { onActionItemSelectionChanged(it) }
 
         binding.recyclerView.layoutManager = FlexboxLayoutManager(requireContext()).apply {
             flexWrap = FlexWrap.WRAP
@@ -144,7 +145,7 @@ class MainFragment : Fragment(), MainActivityActor.Listener {
         }
     }
 
-    override fun onShowActions(actionViewDataList: Collection<ActionViewData>) {
+    override fun onShowActions(actionViewDataList: Collection<ActionWithMultipleKeysViewData>) {
         actionsAdapter.actions.clear()
 
         actionsAdapter.actions.addAll(actionViewDataList)
@@ -158,11 +159,7 @@ class MainFragment : Fragment(), MainActivityActor.Listener {
     }
 
     override fun onActionsRemoved(bindingsIDs: Collection<String>) {
-        val items = actionsAdapter.actions.filter {
-            bindingsIDs.contains(it.bindingID)
-        }
-        actionsAdapter.actions.removeAll(items)
-        actionsAdapter.notifyDataSetChanged()
+        actionsAdapter.removeKeyBindings(bindingsIDs)
     }
 
     private fun onAddBindingClick() {
