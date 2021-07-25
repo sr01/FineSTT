@@ -6,9 +6,9 @@ import com.google.android.material.chip.Chip
 import com.rosi.masts.R
 import com.rosi.masts.mvc.view.android.activity.OnItemSelectedListener
 
-class ActionViewHolder(view: View, val onItemSelectedListener: OnItemSelectedListener<ActionViewData>, private val enableSelection: Boolean = true) :
+open class ActionViewHolder(view: View, val onItemSelectedListener: OnItemSelectedListener<ActionViewData>, private val enableSelection: Boolean = true) :
     RecyclerView.ViewHolder(view) {
-    private var chip: Chip = view.findViewById(R.id.chip)
+    protected var chip: Chip = view.findViewById(R.id.chip)
     private var actionViewData: ActionViewData? = null
 
     init {
@@ -21,9 +21,19 @@ class ActionViewHolder(view: View, val onItemSelectedListener: OnItemSelectedLis
         }
     }
 
-    fun bind(actionViewData: ActionViewData) {
+    open fun bind(actionViewData: ActionViewData) {
         this.actionViewData = actionViewData
         chip.text = actionViewData.displayName
         chip.isChecked = enableSelection && actionViewData.isSelected
+    }
+}
+
+class KeyViewHolder(view: View, onItemSelectedListener: OnItemSelectedListener<ActionViewData>, enableSelection: Boolean = true) :
+    ActionViewHolder(view, onItemSelectedListener, enableSelection) {
+
+    override fun bind(actionViewData: ActionViewData) {
+        super.bind(actionViewData)
+
+        chip.text = actionViewData.boundKeyName
     }
 }

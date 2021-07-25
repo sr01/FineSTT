@@ -10,11 +10,11 @@ import com.google.android.flexbox.JustifyContent
 import com.rosi.masts.R
 import com.rosi.masts.databinding.FragmentSelectActionBinding
 import com.rosi.masts.mvc.model.ActionTypes
-import com.rosi.masts.mvc.view.android.adapters.ActionViewDataAdapter
+import com.rosi.masts.mvc.view.android.adapters.ActionsAdapter
 import com.rosi.masts.utils.android.toast
 
 class SelectActionFragment : WizardBaseFragment() {
-    private lateinit var actionsAdapter: ActionViewDataAdapter
+    private lateinit var actionsAdapter: ActionsAdapter
     private lateinit var viewBinding: FragmentSelectActionBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -25,7 +25,7 @@ class SelectActionFragment : WizardBaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        actionsAdapter = ActionViewDataAdapter(true) { onActionItemSelectionChanged(it) }
+        actionsAdapter = ActionsAdapter(true) { onActionItemSelectionChanged(it) }
 
         viewBinding.recyclerView.layoutManager = FlexboxLayoutManager(requireContext()).apply {
             flexWrap = FlexWrap.WRAP
@@ -68,9 +68,7 @@ class SelectActionFragment : WizardBaseFragment() {
 
     private fun refreshAvailableActions(availableActions: Collection<ActionTypes>) {
         logger.testPrint(TAG, "refreshAvailableActions, availableActions: ${availableActions.size}")
-        actionsAdapter.actions.clear()
-        actionsAdapter.actions.addAll(availableActions.toListOfActionViewData(stringsProvider))
-        actionsAdapter.notifyDataSetChanged()
+        actionsAdapter.addItems(availableActions.toListOfActionViewData(stringsProvider))
 
         if (availableActions.isEmpty()) {
             viewBinding.textInstruction.text = getString(R.string.no_action_available)
