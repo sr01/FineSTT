@@ -62,6 +62,11 @@ class KeyBindingStorage {
         return bindings.remove(bindingID)
     }
 
+    fun replaceAll(storage: KeyBindingStorage) {
+        this.bindings.clear()
+        this.bindings.putAll(storage.bindings)
+    }
+
     fun addAll(storage: KeyBindingStorage) {
         this.bindings.putAll(storage.bindings)
     }

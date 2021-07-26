@@ -41,6 +41,7 @@
     <string name="settings_preference_category_applications">Applications</string>
     <string name="settings_preference_category_debug">Debug</string>
     <string name="settings_title">Settings</string>
+    <string name="import_export_title">Import and export</string>
 
     <string name="service_status">Service Status</string>
     <string name="permissions_required_dialog_title">Permissions Required</string>
@@ -65,4 +66,10 @@
     <string name="restart_to_apply_changes">Restart to apply changes</string>
     <string name="restart">restart</string>
 
+    <string name="permissions_request_text">Permission to access storage is required</string>
+    <string name="permissions_request_action_text">Permissions</string>
+    <string name="permissions_request_via_settings_text">Permission to access storage is required, this can be changed in the app settings</string>
+    <string name="permissions_request_via_settings_action_text">Settings</string>
+    <string name="export_bindings">Export bindings</string>
+    <string name="import_bindings">Import bindings</string>
 </resources>

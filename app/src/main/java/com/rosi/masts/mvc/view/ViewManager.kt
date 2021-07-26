@@ -58,6 +58,8 @@ class ViewManager(controller: Controller, override val name: String, deps: Depen
 
             is RemoveKeyActionBindingMessage -> this send message to mainActivityActor
 
+            is ImportKeyBindingsMessage -> this send message to mainActivityActor
+
             else -> printUnknownMessage(message)
         }
     }

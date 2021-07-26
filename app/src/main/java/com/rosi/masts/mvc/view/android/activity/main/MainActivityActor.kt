@@ -13,6 +13,7 @@ import com.rosi.masts.mvc.view.android.activity.keybinding.ActionViewData
 import com.rosi.masts.mvc.view.android.activity.keybinding.ActionWithMultipleKeysViewData
 import com.rosi.masts.utils.Logger
 import kotlinx.coroutines.CoroutineScope
+import java.io.File
 
 class MainActivityActor(
     private val controller: Controller,
@@ -29,18 +30,16 @@ class MainActivityActor(
 
         when (message) {
             is GetServiceStatus -> if (message.isRunning != null) getServiceStatus(message.isRunning)
-            is GetKeyActionBindingsMessage -> if (message.bindings != null) {
-                getKeyActionBindingsMessage(message.bindings)
-            } else {
-                logger.testPrint(tag, "receive, GetKeyActionBindingsMessage with no bindings")
-            }
+            is GetKeyActionBindingsMessage -> if (message.bindings != null) showActions(message.bindings)
             is ServiceStatusChanged -> serviceStatusChanged(message.isRunning)
             is AddListenerMessage<*> -> if (message.listener is Listener) listeners.add(message.listener)
             is RemoveListenerMessage<*> -> if (message.listener is Listener) listeners.remove(message.listener)
             is RemoveKeyActionBindingMessage -> if (message.removedBindings != null) removeKeyActionBindingMessage(message, message.removedBindings)
+            is ImportKeyBindingsMessage -> if (message.bindings != null) showActions(message.bindings)
             else -> printUnknownMessage(message)
         }
     }
+
 
     fun addListener(listener: Listener) {
         this send AddListenerMessage(listener = listener) to this
@@ -58,6 +57,14 @@ class MainActivityActor(
         }
     }
 
+    fun exportBindings() {
+        this send ExportKeyBindingsMessage() to controller
+    }
+
+    fun importBindings(file: File) {
+        this send ImportKeyBindingsMessage(file = file) to controller
+    }
+
     private val tag = "MainActivityActor"
     private fun getServiceStatus(isRunning: Boolean) {
         logger.testPrint(tag, "getServiceStatus, listeners: ${listeners.size}")
@@ -69,7 +76,7 @@ class MainActivityActor(
         listeners.forEach { it.onServiceStatusChanged(isRunning) }
     }
 
-    private fun getKeyActionBindingsMessage(bindings: Collection<KeyActionBinding>) {
+    private fun showActions(bindings: Collection<KeyActionBinding>) {
 
         val keyActionViewDataList = bindings.map { binding ->
             ActionViewData(

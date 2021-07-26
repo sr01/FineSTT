@@ -8,15 +8,20 @@ import com.rosi.masts.mvc.model.Key
 import com.rosi.masts.mvc.model.ModelManager
 import com.rosi.masts.mvc.model.mcu.MCUInputKey
 import com.rosi.masts.mvc.model.settings.Settings
+import com.rosi.masts.utils.DateTimeProvider
 import com.rosi.masts.utils.Logger
+import com.rosi.masts.utils.TextFileReadWrite
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.serialization.*
 import kotlinx.serialization.json.*
 import kotlinx.serialization.modules.SerializersModule
+import java.io.File
 
 open class KeyBindingStorageActor(private val controller: Controller,
                                   private val modelManager: ModelManager,
                                   private val settings: Settings,
+                                  private val textFileReadWrite: TextFileReadWrite,
+                                  private val dateTimeProvider: DateTimeProvider,
                                   name: String,
                                   override val logger: Logger,
                                   scope: CoroutineScope) :
@@ -40,6 +45,8 @@ open class KeyBindingStorageActor(private val controller: Controller,
             is GetAvailableActionsMessage -> getAvailableActionsMessage(message, message.recipient)
             is RemoveKeyActionBindingMessage -> removeKeyActionBindingMessage(message, message.bindingID)
             is InputKeyMessage -> if (message.key != null) inputKeyMessage(message, message.key)
+            is ExportKeyBindingsMessage -> exportKeyBindingsMessage()
+            is ImportKeyBindingsMessage -> importKeyBindingsMessage(message, message.file)
             else -> printUnknownMessage(message)
         }
     }
@@ -90,6 +97,25 @@ open class KeyBindingStorageActor(private val controller: Controller,
         val removedBinding = storage.removeByID(bindingID)
         save()
         this send message.withRemovedBindings(listOfNotNull(removedBinding)) to controller
+    }
+
+    private fun exportKeyBindingsMessage() {
+        val json = serializer.encodeToString(storage)
+        val filename = "FineSTT-${dateTimeProvider.currentDateTimeForFilename()}.json"
+        textFileReadWrite.write(filename, json)
+    }
+
+    private fun importKeyBindingsMessage(message: ImportKeyBindingsMessage, file: File) {
+        try {
+            val json = textFileReadWrite.read(file)
+            val loadedStorage = serializer.decodeFromString<KeyBindingStorage>(json)
+            this.storage.replaceAll(loadedStorage)
+            save()
+            val bindings = storage.getAll()
+            this send message.withActions(bindings) to controller
+        } catch (e: Exception) {
+            logger.e(tag, "failed to import from file: $file", e)
+        }
     }
 
     private fun getAvailableActions(): Collection<ActionTypes> {

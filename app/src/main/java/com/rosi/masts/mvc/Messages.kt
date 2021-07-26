@@ -6,6 +6,7 @@ import com.rosi.masts.base.actor.Message
 import com.rosi.masts.mvc.model.keybinding.KeyActionBinding
 import com.rosi.masts.mvc.model.ActionTypes
 import com.rosi.masts.mvc.model.mcu.MCUInputKey
+import java.io.File
 
 data class InputKeyMessage(override val sender: ISender = DefaultSender,
                            val data: ByteArray,
@@ -31,7 +32,7 @@ data class StartKeyBindingMessage(override val sender: ISender = DefaultSender) 
 
 data class StartKeyBindingForActionMessage(override val sender: ISender = DefaultSender, val bindingID: String, val keyActionBinding: KeyActionBinding? = null) : Message {
     override fun withSender(sender: ISender) = this.copy(sender = sender)
-    fun withKeyActionBinding(keyActionBinding : KeyActionBinding) = this.copy(keyActionBinding = keyActionBinding)
+    fun withKeyActionBinding(keyActionBinding: KeyActionBinding) = this.copy(keyActionBinding = keyActionBinding)
 }
 
 data class StopKeyBindingMessage(override val sender: ISender = DefaultSender) : Message {
@@ -54,7 +55,7 @@ data class ServiceStatusChanged(override val sender: ISender = DefaultSender, va
     override fun withSender(sender: ISender) = this.copy(sender = sender)
 }
 
-data class AddOrUpdateKeyActionBindingMessage(override val sender: ISender = DefaultSender, val key: MCUInputKey, val action: ActionTypes, val bindingID : String? = null) : Message {
+data class AddOrUpdateKeyActionBindingMessage(override val sender: ISender = DefaultSender, val key: MCUInputKey, val action: ActionTypes, val bindingID: String? = null) : Message {
     override fun withSender(sender: ISender) = this.copy(sender = sender)
 }
 
@@ -98,4 +99,13 @@ data class KeySelectedMessage(override val sender: ISender = DefaultSender, val 
 
 data class BindSuccessMessage(override val sender: ISender = DefaultSender, val keyActionBinding: KeyActionBinding) : Message {
     override fun withSender(sender: ISender) = this.copy(sender = sender)
+}
+
+data class ExportKeyBindingsMessage(override val sender: ISender = DefaultSender) : Message {
+    override fun withSender(sender: ISender) = this.copy(sender = sender)
+}
+
+data class ImportKeyBindingsMessage(override val sender: ISender = DefaultSender, val file: File, val bindings: Collection<KeyActionBinding>? = null) : Message {
+    override fun withSender(sender: ISender) = this.copy(sender = sender)
+    fun withActions(bindings: Collection<KeyActionBinding>) = this.copy(bindings = bindings)
 }

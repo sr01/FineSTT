@@ -5,7 +5,6 @@ import com.rosi.masts.mvc.model.media.MediaController
 import com.rosi.masts.mvc.model.settings.Settings
 import com.rosi.masts.mvc.view.resources.StringsProvider
 import com.rosi.masts.mvc.view.android.resources.AndroidStringsProvider
-import com.rosi.masts.utils.Logger
 import com.rosi.masts.utils.android.*
 import com.rosi.masts.mvc.view.android.settings.SharedPreferencesSettings
 import com.rosi.masts.mvc.view.android.media.SpotifySendKeysAppControllerActor
@@ -14,8 +13,7 @@ import com.rosi.masts.mvc.view.stt.JavaToJni
 import com.rosi.masts.mvc.view.stt.JniToJava
 import com.rosi.masts.mvc.view.stt.SttJavaToJni
 import com.rosi.masts.mvc.view.stt.SttJniToJave
-import com.rosi.masts.utils.RootChecker
-import com.rosi.masts.utils.TerminalUtils
+import com.rosi.masts.utils.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -67,5 +65,13 @@ class AndroidDependencyProvider(context: Context) : DependencyProvider {
 
     override val rootChecker: RootChecker by lazy {
         TerminalUtils
+    }
+
+    override val textFileReadWrite: TextFileReadWrite by lazy {
+        AndroidTextFileReadWrite(context, logger, mainScope)
+    }
+
+    override val dateTimeProvider: DateTimeProvider by lazy {
+        AndroidDateTimeProvider
     }
 }
