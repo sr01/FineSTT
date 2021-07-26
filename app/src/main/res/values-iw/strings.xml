@@ -18,6 +18,7 @@
     <string name="settings_preference_category_applications">אפליקציות</string>
     <string name="settings_preference_category_debug">דיבאג</string>
     <string name="settings_title">הגדרות</string>
+    <string name="import_export_title">יבוא ויצוא</string>
 
     <string name="key_action_types_next">הבא</string>
     <string name="key_action_types_prev">הקודם</string>
@@ -47,4 +48,13 @@
     <string name="bind_button_text">מיפוי</string>
     <string name="restart_to_apply_changes">הפעל מחדש כדי ליישם שינויים</string>
     <string name="restart">הפעל מחדש</string>
+
+    <string name="permissions_request_text">יש צורך בהרשאת גישה לאחסון</string>
+    <string name="permissions_request_action_text">הרשאות</string>
+    <string name="permissions_request_via_settings_text">יש צורך בהרשאת גישה לאחסון, ניתן לשנות זאת בהגדרות האפליקציה</string>
+    <string name="permissions_request_via_settings_action_text">הגדרות</string>
+    <string name="share_bindings">שיתוף</string>
+    <string name="export_bindings">יצוא מיפוי לקובץ</string>
+    <string name="import_bindings">יבוא מיפוי מקובץ</string>
+    <string name="share_bindings_message_when_no_bindings_exist">אין מיפוים לשתף</string>
 </resources>

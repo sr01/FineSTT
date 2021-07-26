@@ -12,7 +12,7 @@ import com.rosi.masts.mvc.model.mcu.InputKeyLogicActor
 
 class ModelManager(controller: Controller, override val name: String, deps: DependencyProvider) : Actor(name, deps.logger, deps.generalScope) {
 
-    private val keyBindingStorageActor = KeyBindingStorageActor(controller, this, deps.settings, "model-manager/key-binding-storage", deps.logger, deps.ioScope)
+    private val keyBindingStorageActor = KeyBindingStorageActor(controller, this, deps.settings, deps.textFileReadWrite, deps.dateTimeProvider, "model-manager/key-binding-storage", deps.logger, deps.ioScope)
     val keyBindingLogicActor = KeyBindingLogicActor(controller, this, "model-manager/key-binding-actor", logger, deps.generalScope)
     private val inputKeyLogicActor = InputKeyLogicActor(controller, this, "model-manager/input-key-logic", logger, deps.generalScope)
 
@@ -53,6 +53,11 @@ class ModelManager(controller: Controller, override val name: String, deps: Depe
             is GetAvailableActionsMessage -> this send message to keyBindingStorageActor
             is SelectActionMessage -> this send message to keyBindingStorageActor
             is AddOrUpdateKeyActionBindingMessage -> this send message to keyBindingStorageActor
+
+            is ExportKeyBindingsMessage -> this send message to keyBindingStorageActor
+            is ImportKeyBindingsMessage -> this send message to keyBindingStorageActor
+            is ShareKeyBindingsMessage -> this send message to keyBindingStorageActor
+
             else -> printUnknownMessage(message)
         }
     }

@@ -62,9 +62,19 @@ class KeyBindingStorage {
         return bindings.remove(bindingID)
     }
 
+    fun replaceAll(storage: KeyBindingStorage) {
+        this.bindings.clear()
+        this.bindings.putAll(storage.bindings)
+    }
+
     fun addAll(storage: KeyBindingStorage) {
         this.bindings.putAll(storage.bindings)
     }
+
+    val size: Int
+        get() {
+            return bindings.size
+        }
 
     private fun removeAllByAction(actionType: ActionTypes, excludeBindingID: BindingID? = null): Collection<KeyActionBinding> {
         val removeBindings = bindings.values.filter {

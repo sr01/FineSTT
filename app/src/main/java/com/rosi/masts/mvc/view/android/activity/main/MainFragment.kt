@@ -1,17 +1,26 @@
 package com.rosi.masts.mvc.view.android.activity.main
 
+import android.Manifest
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
 import android.view.*
+import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.files.fileChooser
 import com.google.android.flexbox.FlexWrap
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.flexbox.JustifyContent
+import com.google.android.material.snackbar.Snackbar
 import com.rosi.masts.R
 import com.rosi.masts.databinding.FragmentMainBinding
 import com.rosi.masts.di.controller
@@ -22,16 +31,23 @@ import com.rosi.masts.mvc.view.android.activity.keybinding.KeyBindingActivityOpe
 import com.rosi.masts.mvc.view.android.adapters.ActionWithMultipleKeysAdapter
 import com.rosi.masts.mvc.view.android.service.AppControlService
 import com.rosi.masts.mvc.view.android.service.MediaNotificationListenerService
+import com.rosi.masts.utils.android.AndroidTextFileReadWrite
 import com.rosi.masts.utils.Logger
+import com.rosi.masts.utils.android.AndroidIntents
 
 
 class MainFragment : Fragment(), MainActivityActor.Listener {
 
+    private val TAG = "MainFragment"
     private lateinit var logger: Logger
+    private lateinit var settings: com.rosi.masts.mvc.model.settings.Settings
     private lateinit var binding: FragmentMainBinding
     private lateinit var actor: MainActivityActor
     private lateinit var actionsAdapter: ActionWithMultipleKeysAdapter
     private var isServiceRunning = false
+    private lateinit var requestPermissionLauncher: ActivityResultLauncher<String>
+    private val requiredPermission = Manifest.permission.WRITE_EXTERNAL_STORAGE
+    private var pendingPermissionsAction: (() -> Unit?)? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,6 +59,17 @@ class MainFragment : Fragment(), MainActivityActor.Listener {
         val dependencyProvider = context.applicationContext.dependencyProvider
         logger = dependencyProvider.logger
         actor = context.applicationContext.controller.viewManager.mainActivityActor
+        settings = dependencyProvider.settings
+
+        requestPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
+            if (isGranted) {
+                logger.d(TAG, "permission granted")
+                pendingPermissionsAction?.invoke()
+
+            } else {
+                showPermissionRequestAndOpenApplicationDetailsSettings()
+            }
+        }
     }
 
     override fun onStart() {
@@ -86,6 +113,18 @@ class MainFragment : Fragment(), MainActivityActor.Listener {
         return when (item.itemId) {
             R.id.menu_item_settings -> {
                 findNavController().navigate(R.id.action_MainFragment_to_settingsFragment)
+                true
+            }
+            R.id.menu_item_share -> {
+                shareBindings()
+                true
+            }
+            R.id.menu_item_export -> {
+                exportBindings()
+                true
+            }
+            R.id.menu_item_import -> {
+                importBindings()
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -161,6 +200,14 @@ class MainFragment : Fragment(), MainActivityActor.Listener {
         updateNoActionsView()
     }
 
+    override fun onShareBindings(bindingsJson: String) {
+        if (bindingsJson.isEmpty()) {
+            Toast.makeText(requireContext(), getString(R.string.share_bindings_message_when_no_bindings_exist), Toast.LENGTH_SHORT).show()
+        } else {
+            startActivity(AndroidIntents.newShareIntent(bindingsJson,getString(R.string.share_bindings_subject)))
+        }
+    }
+
     private fun onAddBindingClick() {
         val action = MainFragmentDirections.actionMainFragmentToKeyBindingActivity(operation = KeyBindingActivityOperations.Create)
         findNavController().navigate(action)
@@ -191,5 +238,65 @@ class MainFragment : Fragment(), MainActivityActor.Listener {
             0 -> View.VISIBLE
             else -> View.INVISIBLE
         }
+    }
+
+    private fun shareBindings() {
+        actor.shareBindings()
+    }
+
+    private fun importBindings() {
+        checkPermissions {
+            val context = requireContext()
+            val initialDirectory = AndroidTextFileReadWrite.getWorkingDirectory(context)
+            MaterialDialog(context).show {
+                fileChooser(initialDirectory = initialDirectory, context = context) { dialog, file ->
+                    actor.importBindings(file)
+                }
+            }
+        }
+    }
+
+    private fun exportBindings() {
+        checkPermissions {
+            actor.exportBindings()
+        }
+    }
+
+    private fun checkPermissions(action: () -> Unit) {
+        this.pendingPermissionsAction = action
+
+        when {
+            ContextCompat.checkSelfPermission(requireContext(), requiredPermission) == PackageManager.PERMISSION_GRANTED -> {
+                logger.d(TAG, "permission granted")
+                pendingPermissionsAction?.invoke()
+            }
+            shouldShowRequestPermissionRationale(requiredPermission) -> {
+                logger.d(TAG, "checkPermissions, 2")
+                showPermissionRequest()
+            }
+            else -> {
+                logger.d(TAG, "checkPermissions, 3")
+                requestPermissionLauncher.launch(requiredPermission)
+            }
+        }
+    }
+
+    private fun showPermissionRequest() {
+        Snackbar.make(binding.root, R.string.permissions_request_text, Snackbar.LENGTH_LONG)
+            .setAction(R.string.permissions_request_action_text) { requestPermissionLauncher.launch(requiredPermission) }
+            .show()
+    }
+
+    private fun showPermissionRequestAndOpenApplicationDetailsSettings() {
+        Snackbar.make(binding.root, R.string.permissions_request_via_settings_text, Snackbar.LENGTH_LONG)
+            .setAction(R.string.permissions_request_via_settings_action_text) { openApplicationDetailsSettings() }
+            .show()
+    }
+
+    private fun openApplicationDetailsSettings() {
+        val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.parse("package:${requireActivity().packageName}")).apply {
+            addCategory(Intent.CATEGORY_DEFAULT)
+        }
+        startActivity(intent)
     }
 }
