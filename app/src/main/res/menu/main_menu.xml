@@ -9,6 +9,12 @@
         app:showAsAction="ifRoom" />
 
     <item
+        android:id="@+id/menu_item_share"
+        android:icon="@drawable/ic_baseline_share_24"
+        android:title="@string/share_bindings"
+        app:showAsAction="never" />
+
+    <item
         android:id="@+id/menu_item_export"
         android:icon="@drawable/ic_baseline_file_download_24"
         android:title="@string/export_bindings"

@@ -70,6 +70,9 @@
     <string name="permissions_request_action_text">Permissions</string>
     <string name="permissions_request_via_settings_text">Permission to access storage is required, this can be changed in the app settings</string>
     <string name="permissions_request_via_settings_action_text">Settings</string>
-    <string name="export_bindings">Export bindings</string>
-    <string name="import_bindings">Import bindings</string>
+    <string name="share_bindings">Share</string>
+    <string name="export_bindings">Export to file</string>
+    <string name="import_bindings">Import from file</string>
+    <string name="share_bindings_message_when_no_bindings_exist">No bindings to share</string>
+    <string name="share_bindings_subject" translatable="false">Key Actions Bindings</string>
 </resources>

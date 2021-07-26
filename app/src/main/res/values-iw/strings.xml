@@ -53,6 +53,8 @@
     <string name="permissions_request_action_text">הרשאות</string>
     <string name="permissions_request_via_settings_text">יש צורך בהרשאת גישה לאחסון, ניתן לשנות זאת בהגדרות האפליקציה</string>
     <string name="permissions_request_via_settings_action_text">הגדרות</string>
-    <string name="export_bindings">יצוא מיפוי מקשים</string>
-    <string name="import_bindings">יבוא מיפוי מקשים</string>
+    <string name="share_bindings">שיתוף</string>
+    <string name="export_bindings">יצוא מיפוי לקובץ</string>
+    <string name="import_bindings">יבוא מיפוי מקובץ</string>
+    <string name="share_bindings_message_when_no_bindings_exist">אין מיפוים לשתף</string>
 </resources>

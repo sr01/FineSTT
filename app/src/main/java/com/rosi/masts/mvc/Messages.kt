@@ -109,3 +109,8 @@ data class ImportKeyBindingsMessage(override val sender: ISender = DefaultSender
     override fun withSender(sender: ISender) = this.copy(sender = sender)
     fun withActions(bindings: Collection<KeyActionBinding>) = this.copy(bindings = bindings)
 }
+
+data class ShareKeyBindingsMessage(override val sender: ISender = DefaultSender, val bindingsJson: String? = null) : Message {
+    override fun withSender(sender: ISender) = this.copy(sender = sender)
+    fun withBindingsJson(bindingsJson: String) = this.copy(bindingsJson = bindingsJson)
+}

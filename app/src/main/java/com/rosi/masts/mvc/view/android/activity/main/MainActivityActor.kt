@@ -23,6 +23,7 @@ class MainActivityActor(
     logger: Logger,
     scope: CoroutineScope) : Actor(name, logger, scope) {
 
+    private val tag = "MainActivityActor"
     private var listeners = mutableListOf<Listener>()
 
     override suspend fun receive(message: Message) {
@@ -36,10 +37,10 @@ class MainActivityActor(
             is RemoveListenerMessage<*> -> if (message.listener is Listener) listeners.remove(message.listener)
             is RemoveKeyActionBindingMessage -> if (message.removedBindings != null) removeKeyActionBindingMessage(message, message.removedBindings)
             is ImportKeyBindingsMessage -> if (message.bindings != null) showActions(message.bindings)
+            is ShareKeyBindingsMessage -> if (message.bindingsJson != null) shareKeyBindingsMessage(message.bindingsJson)
             else -> printUnknownMessage(message)
         }
     }
-
 
     fun addListener(listener: Listener) {
         this send AddListenerMessage(listener = listener) to this
@@ -57,6 +58,10 @@ class MainActivityActor(
         }
     }
 
+    fun shareBindings() {
+        this send ShareKeyBindingsMessage() to controller
+    }
+
     fun exportBindings() {
         this send ExportKeyBindingsMessage() to controller
     }
@@ -65,7 +70,6 @@ class MainActivityActor(
         this send ImportKeyBindingsMessage(file = file) to controller
     }
 
-    private val tag = "MainActivityActor"
     private fun getServiceStatus(isRunning: Boolean) {
         logger.testPrint(tag, "getServiceStatus, listeners: ${listeners.size}")
         listeners.forEach { it.onServiceStatusChanged(isRunning) }
@@ -105,9 +109,14 @@ class MainActivityActor(
         }
     }
 
+    private fun shareKeyBindingsMessage(bindingsJson: String) {
+        listeners.forEach { it.onShareBindings(bindingsJson) }
+    }
+
     interface Listener {
         fun onServiceStatusChanged(isRunning: Boolean)
         fun onShowActions(actions: Collection<ActionWithMultipleKeysViewData>)
         fun onActionsRemoved(bindingsIDs: Collection<String>)
+        fun onShareBindings(bindingsJson: String)
     }
 }

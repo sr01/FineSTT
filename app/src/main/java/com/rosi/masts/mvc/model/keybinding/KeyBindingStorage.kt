@@ -71,6 +71,11 @@ class KeyBindingStorage {
         this.bindings.putAll(storage.bindings)
     }
 
+    val size: Int
+        get() {
+            return bindings.size
+        }
+
     private fun removeAllByAction(actionType: ActionTypes, excludeBindingID: BindingID? = null): Collection<KeyActionBinding> {
         val removeBindings = bindings.values.filter {
             (excludeBindingID != null && it.id != excludeBindingID) && it.actionType == actionType

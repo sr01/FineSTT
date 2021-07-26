@@ -60,6 +60,8 @@ class ViewManager(controller: Controller, override val name: String, deps: Depen
 
             is ImportKeyBindingsMessage -> this send message to mainActivityActor
 
+            is ShareKeyBindingsMessage -> this send message to mainActivityActor
+
             else -> printUnknownMessage(message)
         }
     }

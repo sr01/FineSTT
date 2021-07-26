@@ -56,6 +56,7 @@ class ModelManager(controller: Controller, override val name: String, deps: Depe
 
             is ExportKeyBindingsMessage -> this send message to keyBindingStorageActor
             is ImportKeyBindingsMessage -> this send message to keyBindingStorageActor
+            is ShareKeyBindingsMessage -> this send message to keyBindingStorageActor
 
             else -> printUnknownMessage(message)
         }

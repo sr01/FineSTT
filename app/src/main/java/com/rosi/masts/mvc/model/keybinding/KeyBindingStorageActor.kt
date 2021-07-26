@@ -47,6 +47,7 @@ open class KeyBindingStorageActor(private val controller: Controller,
             is InputKeyMessage -> if (message.key != null) inputKeyMessage(message, message.key)
             is ExportKeyBindingsMessage -> exportKeyBindingsMessage()
             is ImportKeyBindingsMessage -> importKeyBindingsMessage(message, message.file)
+            is ShareKeyBindingsMessage -> shareKeyBindingsMessage(message)
             else -> printUnknownMessage(message)
         }
     }
@@ -116,6 +117,16 @@ open class KeyBindingStorageActor(private val controller: Controller,
         } catch (e: Exception) {
             logger.e(tag, "failed to import from file: $file", e)
         }
+    }
+
+    private fun shareKeyBindingsMessage(message: ShareKeyBindingsMessage) {
+        val json = if (storage.size > 0) {
+            serializer.encodeToString(storage)
+        } else {
+            ""
+        }
+
+        this send message.withBindingsJson(json) to controller
     }
 
     private fun getAvailableActions(): Collection<ActionTypes> {

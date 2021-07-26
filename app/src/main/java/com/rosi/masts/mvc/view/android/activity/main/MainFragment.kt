@@ -9,6 +9,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
 import android.view.*
+import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
@@ -32,6 +33,7 @@ import com.rosi.masts.mvc.view.android.service.AppControlService
 import com.rosi.masts.mvc.view.android.service.MediaNotificationListenerService
 import com.rosi.masts.utils.android.AndroidTextFileReadWrite
 import com.rosi.masts.utils.Logger
+import com.rosi.masts.utils.android.AndroidIntents
 
 
 class MainFragment : Fragment(), MainActivityActor.Listener {
@@ -111,6 +113,10 @@ class MainFragment : Fragment(), MainActivityActor.Listener {
         return when (item.itemId) {
             R.id.menu_item_settings -> {
                 findNavController().navigate(R.id.action_MainFragment_to_settingsFragment)
+                true
+            }
+            R.id.menu_item_share -> {
+                shareBindings()
                 true
             }
             R.id.menu_item_export -> {
@@ -194,6 +200,14 @@ class MainFragment : Fragment(), MainActivityActor.Listener {
         updateNoActionsView()
     }
 
+    override fun onShareBindings(bindingsJson: String) {
+        if (bindingsJson.isEmpty()) {
+            Toast.makeText(requireContext(), getString(R.string.share_bindings_message_when_no_bindings_exist), Toast.LENGTH_SHORT).show()
+        } else {
+            startActivity(AndroidIntents.newShareIntent(bindingsJson,getString(R.string.share_bindings_subject)))
+        }
+    }
+
     private fun onAddBindingClick() {
         val action = MainFragmentDirections.actionMainFragmentToKeyBindingActivity(operation = KeyBindingActivityOperations.Create)
         findNavController().navigate(action)
@@ -224,6 +238,10 @@ class MainFragment : Fragment(), MainActivityActor.Listener {
             0 -> View.VISIBLE
             else -> View.INVISIBLE
         }
+    }
+
+    private fun shareBindings() {
+        actor.shareBindings()
     }
 
     private fun importBindings() {
