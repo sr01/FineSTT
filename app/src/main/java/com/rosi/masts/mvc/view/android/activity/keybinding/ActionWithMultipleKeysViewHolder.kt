@@ -13,7 +13,7 @@ import com.rosi.masts.mvc.view.android.adapters.KeysAdapter
 class ActionWithMultipleKeysViewHolder(view: View, val onItemSelectedListener: OnItemSelectedListener<ActionViewData>) : RecyclerView.ViewHolder(view) {
 
     private var actionViewMultipleKeysData: ActionWithMultipleKeysViewData? = null
-    private val keysAdapter: KeysAdapter = KeysAdapter(false, {})
+    private val keysAdapter: KeysAdapter = KeysAdapter(false, onItemSelectedListener)
     private val actionTextView: TextView = view.findViewById(R.id.text_action)
     private val recyclerView: RecyclerView = view.findViewById(R.id.recycler_view)
 

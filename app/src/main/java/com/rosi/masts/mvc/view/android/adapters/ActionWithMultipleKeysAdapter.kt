@@ -34,6 +34,10 @@ class ActionWithMultipleKeysAdapter(private val onItemSelectedListener: OnItemSe
                 notifyItemChanged(index)
             }
         }
+
+        val actionsWithNoKey = actions.filter { it.keys.isEmpty() }
+        actions.removeAll(actionsWithNoKey)
+        notifyDataSetChanged()
     }
 
 //    fun getSelectedItem(): ActionViewData? {

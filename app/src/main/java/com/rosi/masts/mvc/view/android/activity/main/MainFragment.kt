@@ -152,14 +152,13 @@ class MainFragment : Fragment(), MainActivityActor.Listener {
 
         actionsAdapter.notifyDataSetChanged()
 
-        binding.textNoActionBindingsExist.visibility = when (actionsAdapter.itemCount) {
-            0 -> View.VISIBLE
-            else -> View.INVISIBLE
-        }
+        updateNoActionsView()
     }
 
     override fun onActionsRemoved(bindingsIDs: Collection<String>) {
         actionsAdapter.removeKeyBindings(bindingsIDs)
+
+        updateNoActionsView()
     }
 
     private fun onAddBindingClick() {
@@ -185,5 +184,12 @@ class MainFragment : Fragment(), MainActivityActor.Listener {
     private fun openNotificationSettings() {
         val intent = Intent("android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS")
         startActivity(intent)
+    }
+
+    private fun updateNoActionsView() {
+        binding.textNoActionBindingsExist.visibility = when (actionsAdapter.itemCount) {
+            0 -> View.VISIBLE
+            else -> View.INVISIBLE
+        }
     }
 }
