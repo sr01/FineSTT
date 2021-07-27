@@ -10,9 +10,7 @@ import com.rosi.masts.mvc.view.resources.StringsProvider
 import com.rosi.masts.mvc.view.stt.JavaToJni
 import com.rosi.masts.mvc.view.stt.JniToJava
 import com.rosi.masts.test.TestActor
-import com.rosi.masts.utils.ConsoleLogger
-import com.rosi.masts.utils.Logger
-import com.rosi.masts.utils.RootChecker
+import com.rosi.masts.utils.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.test.TestCoroutineScope
 import org.mockito.kotlin.*
@@ -29,7 +27,7 @@ open class ControllerTestBase {
             val argumentCaptor = argumentCaptor<ActionTypes>()
             on {
                 getDisplayNameForKeyActionType(argumentCaptor.capture())
-            } doAnswer  {
+            } doAnswer {
                 argumentCaptor.firstValue.name.uppercase()
             }
         }
@@ -37,6 +35,9 @@ open class ControllerTestBase {
         override val ioScope: CoroutineScope = testScope
         override val generalScope: CoroutineScope = testScope
         override val rootChecker: RootChecker = mock()
+        override val textFileReadWrite: TextFileReadWrite = mock()
+        override val dateTimeProvider: DateTimeProvider = mock()
+        override val volumeControl: VolumeControl = mock()
     }
     val controller: Controller = Controller(dependencyProvider)
     val testActor = TestActor()

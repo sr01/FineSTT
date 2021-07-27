@@ -8,6 +8,7 @@
     <string name="settings_title_language">שפה</string>
     <string name="settings_title_simulate_key_input">סימולצית מקשים</string>
     <string name="settings_title_check_if_app_is_running">הפעל רק אם אפליקציה פועלת</string>
+    <string name="settings_title_media_applications">אפליקציות ניגון</string>
     <string name="settings_title_show_toast_messages_for_media_actions">הצג הודעה על פעולה</string>
     <string name="settings_title_input_key_debounce_millis">זמן השהייה בין לחיצות [ms]</string>
     <string name="settings_title_binding_compare_method">שיטת השוואה</string>
@@ -18,12 +19,16 @@
     <string name="settings_preference_category_applications">אפליקציות</string>
     <string name="settings_preference_category_debug">דיבאג</string>
     <string name="settings_title">הגדרות</string>
+    <string name="import_export_title">יבוא ויצוא</string>
 
     <string name="key_action_types_next">הבא</string>
     <string name="key_action_types_prev">הקודם</string>
     <string name="key_action_types_pause">הפסק</string>
     <string name="key_action_types_play">נגן</string>
     <string name="key_action_types_playpause">הפסק/נגן</string>
+    <string name="key_action_types_volume_up">Vol+</string>
+    <string name="key_action_types_volume_down">Vol-</string>
+    <string name="key_action_types_volume_mute">Mute</string>
 
     <string name="service_status">מצב פעולת השירות</string>
     <string name="permissions_required_dialog_title">הרשאה נדרשת</string>
@@ -47,4 +52,13 @@
     <string name="bind_button_text">מיפוי</string>
     <string name="restart_to_apply_changes">הפעל מחדש כדי ליישם שינויים</string>
     <string name="restart">הפעל מחדש</string>
+
+    <string name="permissions_request_text">יש צורך בהרשאת גישה לאחסון</string>
+    <string name="permissions_request_action_text">הרשאות</string>
+    <string name="permissions_request_via_settings_text">יש צורך בהרשאת גישה לאחסון, ניתן לשנות זאת בהגדרות האפליקציה</string>
+    <string name="permissions_request_via_settings_action_text">הגדרות</string>
+    <string name="share_bindings">שיתוף</string>
+    <string name="export_bindings">יצוא מיפוי לקובץ</string>
+    <string name="import_bindings">יבוא מיפוי מקובץ</string>
+    <string name="share_bindings_message_when_no_bindings_exist">אין מיפוים לשתף</string>
 </resources>

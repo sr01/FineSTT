@@ -4,6 +4,7 @@ import com.rosi.masts.mvc.model.ActionTypes
 import com.rosi.masts.mvc.model.mcu.MCUInputKey
 import com.rosi.masts.mvc.model.mcu.McuToArmCommands
 import com.rosi.masts.mvc.view.android.activity.keybinding.ActionViewData
+import com.rosi.masts.mvc.view.android.activity.keybinding.ActionWithMultipleKeysViewData
 import com.rosi.masts.mvc.view.android.activity.keybinding.KeyBindingActivityActor
 import com.rosi.masts.mvc.view.android.activity.main.MainActivityActor
 import com.rosi.masts.test.onceWithTimeout
@@ -54,7 +55,7 @@ class ModelTest : ControllerTestBase() {
         // main activity: start
         mainActivityActor.addListener(listener)
 
-        val actionsCaptor = argumentCaptor<Collection<ActionViewData>>()
+        val actionsCaptor = argumentCaptor<Collection<ActionWithMultipleKeysViewData>>()
         verify(listener, onceWithTimeout()).onServiceStatusChanged(any())
         verify(listener, onceWithTimeout()).onShowActions(actionsCaptor.capture())
         assertEquals(0, actionsCaptor.firstValue.size)
@@ -71,7 +72,7 @@ class ModelTest : ControllerTestBase() {
         verify(listener, onceWithTimeout()).onShowActions(actionsCaptor.capture())
         val actionViewData = actionsCaptor.secondValue.first()
         assertEquals(keyActionBinding.actionType, actionViewData.action)
-        assertEquals(keyActionBinding.key.displayName, actionViewData.boundKeyName)
+        assertEquals(keyActionBinding.key.displayName, actionViewData.keys.first().boundKeyName)
     }
 
     @Test
@@ -82,7 +83,7 @@ class ModelTest : ControllerTestBase() {
         // main activity: start
         mainActivityActor.addListener(listener)
 
-        val actionsCaptor = argumentCaptor<Collection<ActionViewData>>()
+        val actionsCaptor = argumentCaptor<Collection<ActionWithMultipleKeysViewData>>()
         verify(listener, onceWithTimeout()).onServiceStatusChanged(any())
         verify(listener, onceWithTimeout()).onShowActions(actionsCaptor.capture())
         assertEquals(0, actionsCaptor.firstValue.size)
@@ -99,21 +100,21 @@ class ModelTest : ControllerTestBase() {
         verify(listener, onceWithTimeout()).onShowActions(actionsCaptor.capture())
         val actionViewData = actionsCaptor.secondValue.first()
         assertEquals(createdKeyActionBinding.actionType, actionViewData.action)
-        assertEquals(createdKeyActionBinding.key.displayName, actionViewData.boundKeyName)
+        assertEquals(createdKeyActionBinding.key.displayName, actionViewData.keys.first().boundKeyName)
         clearInvocations(listener)
 
         // main activity: stop
         mainActivityActor.removeListener(listener)
 
-        val modifiedKeyActionBinding = modifyKeyBinding(actionViewData.bindingID!!)
+        val modifiedKeyActionBinding = modifyKeyBinding(actionViewData.keys.first().bindingID!!)
 
         // main activity: start
         mainActivityActor.addListener(listener)
         verify(listener, onceWithTimeout()).onServiceStatusChanged(any())
         verify(listener, onceWithTimeout()).onShowActions(actionsCaptor.capture())
         val modifiedActionViewData = actionsCaptor.thirdValue.first()
-        assertEquals(actionViewData.bindingID, modifiedActionViewData.bindingID)
-        assertEquals(modifiedKeyActionBinding.key.displayName, modifiedActionViewData.boundKeyName)
+        assertEquals(actionViewData.keys.first().bindingID, modifiedActionViewData.keys.first().bindingID)
+        assertEquals(modifiedKeyActionBinding.key.displayName, modifiedActionViewData.keys.first().boundKeyName)
     }
 
     private fun modifyKeyBinding(bindingID: String): KeyBindingIDPair {

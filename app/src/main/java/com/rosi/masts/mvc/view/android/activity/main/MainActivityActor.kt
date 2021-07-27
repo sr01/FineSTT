@@ -10,8 +10,10 @@ import com.rosi.masts.mvc.model.keybinding.KeyActionBinding
 import com.rosi.masts.mvc.view.resources.StringsProvider
 import com.rosi.masts.mvc.view.ViewManager
 import com.rosi.masts.mvc.view.android.activity.keybinding.ActionViewData
+import com.rosi.masts.mvc.view.android.activity.keybinding.ActionWithMultipleKeysViewData
 import com.rosi.masts.utils.Logger
 import kotlinx.coroutines.CoroutineScope
+import java.io.File
 
 class MainActivityActor(
     private val controller: Controller,
@@ -21,6 +23,7 @@ class MainActivityActor(
     logger: Logger,
     scope: CoroutineScope) : Actor(name, logger, scope) {
 
+    private val tag = "MainActivityActor"
     private var listeners = mutableListOf<Listener>()
 
     override suspend fun receive(message: Message) {
@@ -28,15 +31,13 @@ class MainActivityActor(
 
         when (message) {
             is GetServiceStatus -> if (message.isRunning != null) getServiceStatus(message.isRunning)
-            is GetKeyActionBindingsMessage -> if (message.bindings != null) {
-                getKeyActionBindingsMessage(message.bindings)
-            } else {
-                logger.testPrint(tag, "receive, GetKeyActionBindingsMessage with no bindings")
-            }
+            is GetKeyActionBindingsMessage -> if (message.bindings != null) showActions(message.bindings)
             is ServiceStatusChanged -> serviceStatusChanged(message.isRunning)
             is AddListenerMessage<*> -> if (message.listener is Listener) listeners.add(message.listener)
             is RemoveListenerMessage<*> -> if (message.listener is Listener) listeners.remove(message.listener)
             is RemoveKeyActionBindingMessage -> if (message.removedBindings != null) removeKeyActionBindingMessage(message, message.removedBindings)
+            is ImportKeyBindingsMessage -> if (message.bindings != null) showActions(message.bindings)
+            is ShareKeyBindingsMessage -> if (message.bindingsJson != null) shareKeyBindingsMessage(message.bindingsJson)
             else -> printUnknownMessage(message)
         }
     }
@@ -57,7 +58,18 @@ class MainActivityActor(
         }
     }
 
-    private val tag = "MainActivityActor"
+    fun shareBindings() {
+        this send ShareKeyBindingsMessage() to controller
+    }
+
+    fun exportBindings() {
+        this send ExportKeyBindingsMessage() to controller
+    }
+
+    fun importBindings(file: File) {
+        this send ImportKeyBindingsMessage(file = file) to controller
+    }
+
     private fun getServiceStatus(isRunning: Boolean) {
         logger.testPrint(tag, "getServiceStatus, listeners: ${listeners.size}")
         listeners.forEach { it.onServiceStatusChanged(isRunning) }
@@ -68,7 +80,8 @@ class MainActivityActor(
         listeners.forEach { it.onServiceStatusChanged(isRunning) }
     }
 
-    private fun getKeyActionBindingsMessage(bindings: Collection<KeyActionBinding>) {
+    private fun showActions(bindings: Collection<KeyActionBinding>) {
+
         val keyActionViewDataList = bindings.map { binding ->
             ActionViewData(
                 bindingID = binding.id,
@@ -77,7 +90,16 @@ class MainActivityActor(
                 isSelected = false,
                 boundKeyName = binding.key.displayName)
         }
-        listeners.forEach { it.onShowActions(keyActionViewDataList) }
+
+        val actionViewMultipleKeysData = keyActionViewDataList.groupBy { it.action }
+            .map {
+                ActionWithMultipleKeysViewData(
+                    action = it.key,
+                    displayName = stringsProvider.getDisplayNameForKeyActionType(it.key),
+                    keys = it.value.toMutableList())
+            }
+
+        listeners.forEach { it.onShowActions(actionViewMultipleKeysData) }
     }
 
     private fun removeKeyActionBindingMessage(message: RemoveKeyActionBindingMessage, removedBindings: Collection<KeyActionBinding>) {
@@ -87,9 +109,14 @@ class MainActivityActor(
         }
     }
 
+    private fun shareKeyBindingsMessage(bindingsJson: String) {
+        listeners.forEach { it.onShareBindings(bindingsJson) }
+    }
+
     interface Listener {
         fun onServiceStatusChanged(isRunning: Boolean)
-        fun onShowActions(actions: Collection<ActionViewData>)
+        fun onShowActions(actions: Collection<ActionWithMultipleKeysViewData>)
         fun onActionsRemoved(bindingsIDs: Collection<String>)
+        fun onShareBindings(bindingsJson: String)
     }
 }

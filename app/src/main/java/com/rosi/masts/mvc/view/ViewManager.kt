@@ -21,7 +21,6 @@ class ViewManager(controller: Controller, override val name: String, deps: Depen
     private val appController: MediaController = deps.mediaController
     private val jniToJava: JniToJava = deps.jniToJava
     private val javaToJni: JavaToJni = deps.javaToJni
-    private val rootChecker = deps.rootChecker
 
     val keyBindingActivityActor = KeyBindingActivityActor(controller, "view-manager/key-binding-activity-actor", logger, deps.mainScope)
     val mainActivityActor = MainActivityActor(controller, this, deps.stringsProvider, "view-manager/main-activity-actor", logger, deps.mainScope)
@@ -57,6 +56,10 @@ class ViewManager(controller: Controller, override val name: String, deps: Depen
             is GetAvailableActionsMessage -> this send message to keyBindingActivityActor
 
             is RemoveKeyActionBindingMessage -> this send message to mainActivityActor
+
+            is ImportKeyBindingsMessage -> this send message to mainActivityActor
+
+            is ShareKeyBindingsMessage -> this send message to mainActivityActor
 
             else -> printUnknownMessage(message)
         }

@@ -5,8 +5,7 @@ import com.rosi.masts.mvc.model.settings.Settings
 import com.rosi.masts.mvc.view.resources.StringsProvider
 import com.rosi.masts.mvc.view.stt.JavaToJni
 import com.rosi.masts.mvc.view.stt.JniToJava
-import com.rosi.masts.utils.Logger
-import com.rosi.masts.utils.RootChecker
+import com.rosi.masts.utils.*
 import kotlinx.coroutines.CoroutineScope
 
 
@@ -31,4 +30,10 @@ interface DependencyProvider {
     val generalScope: CoroutineScope
 
     val rootChecker : RootChecker
+
+    val textFileReadWrite : TextFileReadWrite
+
+    val dateTimeProvider : DateTimeProvider
+
+    val volumeControl : VolumeControl
 }

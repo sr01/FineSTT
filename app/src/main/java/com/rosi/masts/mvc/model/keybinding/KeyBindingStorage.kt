@@ -5,9 +5,11 @@ import com.rosi.masts.mvc.model.mcu.MCUInputKey
 import kotlinx.serialization.Serializable
 import java.util.*
 
+typealias BindingID = String
+
 @Serializable
 class KeyBindingStorage {
-    private var bindings = mutableMapOf<String, KeyActionBinding>()
+    private var bindings = mutableMapOf<BindingID, KeyActionBinding>()
 
     fun add(binding: KeyActionBinding) {
         bindings[binding.id] = binding
@@ -19,7 +21,7 @@ class KeyBindingStorage {
         return binding
     }
 
-    fun getByID(bindingID: String): KeyActionBinding? {
+    fun getByID(bindingID: BindingID): KeyActionBinding? {
         return bindings[bindingID]
     }
 
@@ -27,6 +29,7 @@ class KeyBindingStorage {
         val comparator = when (compareMethod) {
             KeyBindingCompareMethod.b3 -> MCUInputKey3Comparator
             KeyBindingCompareMethod.b34 -> MCUInputKey34Comparator
+
             KeyBindingCompareMethod.b345 -> MCUInputKey345Comparator
         }
 
@@ -37,7 +40,7 @@ class KeyBindingStorage {
 
     fun getAll() = bindings.values.toList()
 
-    fun addOrUpdateKey(bindingID: String?, key: MCUInputKey, actionType: ActionTypes, allowMultipleKeysPerAction: Boolean): KeyActionBinding {
+    fun addOrUpdateKey(bindingID: BindingID?, key: MCUInputKey, actionType: ActionTypes, allowMultipleKeysPerAction: Boolean): KeyActionBinding {
         if (!allowMultipleKeysPerAction) {
             removeAllByAction(actionType, bindingID)
         }
@@ -55,15 +58,25 @@ class KeyBindingStorage {
         }
     }
 
-    fun removeByID(bindingID: String): KeyActionBinding? {
+    fun removeByID(bindingID: BindingID): KeyActionBinding? {
         return bindings.remove(bindingID)
+    }
+
+    fun replaceAll(storage: KeyBindingStorage) {
+        this.bindings.clear()
+        this.bindings.putAll(storage.bindings)
     }
 
     fun addAll(storage: KeyBindingStorage) {
         this.bindings.putAll(storage.bindings)
     }
 
-    private fun removeAllByAction(actionType: ActionTypes, excludeBindingID: String? = null): Collection<KeyActionBinding> {
+    val size: Int
+        get() {
+            return bindings.size
+        }
+
+    private fun removeAllByAction(actionType: ActionTypes, excludeBindingID: BindingID? = null): Collection<KeyActionBinding> {
         val removeBindings = bindings.values.filter {
             (excludeBindingID != null && it.id != excludeBindingID) && it.actionType == actionType
         }

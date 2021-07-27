@@ -22,4 +22,15 @@
         <item>iw</item>
     </string-array>
 
+    <string-array name="media_applications_entries">
+        <item>Spotify</item>
+    </string-array>
+
+    <string-array name="media_applications_values">
+        <item>com.spotify.music/com.spotify.music.internal.receiver.MediaButtonReceiver</item>
+    </string-array>
+
+    <string-array name="media_applications_default_value">
+        <item>com.spotify.music/com.spotify.music.internal.receiver.MediaButtonReceiver</item>
+    </string-array>
 </resources>
