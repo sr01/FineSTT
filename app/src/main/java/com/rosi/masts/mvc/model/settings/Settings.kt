@@ -43,6 +43,8 @@ interface Settings {
     fun isMultipleKeysPerActionAllowed(): Boolean
 
     fun setMultipleKeysPerActionAllowed(allowed: Boolean)
+
+    fun getMediaApplications(): List<MediaApplication>
 }
 
 enum class LogLevel {
@@ -50,3 +52,5 @@ enum class LogLevel {
     Info,
     Debug
 }
+
+data class MediaApplication(val packageName: String, val className: String)

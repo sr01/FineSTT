@@ -5,6 +5,7 @@ import android.content.res.Resources
 import com.rosi.masts.R
 import com.rosi.masts.mvc.model.keybinding.KeyBindingCompareMethod
 import com.rosi.masts.mvc.model.settings.LogLevel
+import com.rosi.masts.mvc.model.settings.MediaApplication
 import com.rosi.masts.mvc.model.settings.Settings
 import java.util.*
 
@@ -37,7 +38,7 @@ class SharedPreferencesSettings(private val resources: Resources, private val pr
     }
 
     override fun getInputKeyDebounceMillis(): Long {
-        return prefs.getString(resources.getString(R.string.settings_key_input_key_debounce_millis), "150")!!.toLong()
+        return prefs.getString(resources.getString(R.string.settings_key_input_key_debounce_millis), "350")!!.toLong()
     }
 
     override fun getDisplayKeyInputEventsOnly(): Boolean {
@@ -107,5 +108,13 @@ class SharedPreferencesSettings(private val resources: Resources, private val pr
         prefs.edit()
             .putBoolean(resources.getString(R.string.settings_key_multiple_keys_per_action_allowed), allowed)
             .apply()
+    }
+
+    override fun getMediaApplications(): List<MediaApplication> {
+        return prefs.getStringSet(resources.getString(R.string.settings_key_media_applications), emptySet())!!
+            .map { string ->
+                val fields = string.split("/")
+                MediaApplication(fields[0], fields[1])
+            }
     }
 }

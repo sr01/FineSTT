@@ -19,6 +19,9 @@ class AndroidStringsProvider(private val context: Context, private val settings:
             ActionTypes.Pause -> resources.getString(R.string.key_action_types_pause)
             ActionTypes.Play -> resources.getString(R.string.key_action_types_play)
             ActionTypes.PlayPause -> resources.getString(R.string.key_action_types_playpause)
+            ActionTypes.VolumeUp -> resources.getString(R.string.key_action_types_volume_up)
+            ActionTypes.VolumeDown -> resources.getString(R.string.key_action_types_volume_down)
+            ActionTypes.Mute -> resources.getString(R.string.key_action_types_volume_mute)
         }
     }
 

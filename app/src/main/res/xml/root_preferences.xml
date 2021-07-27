@@ -29,7 +29,7 @@
             app:useSimpleSummaryProvider="true" />
 
         <EditTextPreference
-            android:defaultValue="150"
+            android:defaultValue="350"
             android:inputType="number"
             android:key="@string/settings_key_input_key_debounce_millis"
             android:title="@string/settings_title_input_key_debounce_millis"
@@ -52,6 +52,14 @@
             android:defaultValue="true"
             android:key="@string/settings_key_show_toast_messages_for_media_actions"
             android:title="@string/settings_title_show_toast_messages_for_media_actions" />
+
+        <MultiSelectListPreference
+            android:defaultValue="@array/media_applications_default_value"
+            android:entries="@array/media_applications_entries"
+            android:entryValues="@array/media_applications_values"
+            android:key="@string/settings_key_media_applications"
+            android:summary=""
+            android:title="@string/settings_title_media_applications" />
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/settings_preference_category_debug">
@@ -65,6 +73,8 @@
     </PreferenceCategory>
 
     <PreferenceCategory android:title="Version">
-        <Preference android:title="0.0.0.0" android:key="@string/settings_key_version"/>
+        <Preference
+            android:key="@string/settings_key_version"
+            android:title="0.0.0.0" />
     </PreferenceCategory>
 </PreferenceScreen>

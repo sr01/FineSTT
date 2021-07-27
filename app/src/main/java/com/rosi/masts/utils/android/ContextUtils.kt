@@ -23,29 +23,13 @@ val Context.notificationManager: NotificationManager
 val Context.defaultSharedPreferences: SharedPreferences
     get() = PreferenceManager.getDefaultSharedPreferences(this)
 
-fun Context.toast(messageResId: Int): Toast = Toast
-    .makeText(this, messageResId, Toast.LENGTH_SHORT)
-    .apply {
-        show()
-    }
+fun Context.toast(messageResId: Int): Toast = Toast.makeText(this, messageResId, Toast.LENGTH_SHORT).apply { show() }
 
-fun Context.toast(message: CharSequence): Toast =
-    Toast.makeText(this, message, Toast.LENGTH_SHORT)
-        .apply {
-            show()
-        }
+fun Context.toast(message: CharSequence): Toast = Toast.makeText(this, message, Toast.LENGTH_SHORT).apply { show() }
 
-fun Context.longToast(message: Int): Toast = Toast
-    .makeText(this, message, Toast.LENGTH_LONG)
-    .apply {
-        show()
-    }
+fun Context.longToast(message: Int): Toast = Toast.makeText(this, message, Toast.LENGTH_LONG).apply { show() }
 
-fun Context.longToast(message: CharSequence): Toast = Toast
-    .makeText(this, message, Toast.LENGTH_LONG)
-    .apply {
-        show()
-    }
+fun Context.longToast(message: CharSequence): Toast = Toast.makeText(this, message, Toast.LENGTH_LONG).apply { show() }
 
 fun Context.copyToClipboard(label: String, text: CharSequence) {
     val clipboard: ClipboardManager = getSystemService(AppCompatActivity.CLIPBOARD_SERVICE) as ClipboardManager

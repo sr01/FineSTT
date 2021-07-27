@@ -13,6 +13,9 @@
     <string name="key_action_types_pause">Pause</string>
     <string name="key_action_types_play">Play</string>
     <string name="key_action_types_playpause">Play/Pause</string>
+    <string name="key_action_types_volume_up">Vol+</string>
+    <string name="key_action_types_volume_down">Vol-</string>
+    <string name="key_action_types_volume_mute">Mute</string>
 
     <string name="settings_key_start_on_boot_enabled" translatable="false">start_on_boot_enabled</string>
     <string name="settings_key_display_log_level" translatable="false">display_log_level</string>
@@ -26,11 +29,13 @@
     <string name="settings_key_show_toast_messages_for_media_actions" translatable="false">check_if_app_is_running</string>
     <string name="settings_key_multiple_keys_per_action_allowed" translatable="false">multiple_keys_per_action_allowed</string>
     <string name="settings_key_version" translatable="false">settings_key_version</string>
+    <string name="settings_key_media_applications" translatable="false">settings_key_media_applications</string>
     <string name="settings_summary_simulate_key_input" translatable="false">example: adb shell am broadcast -a com.rosi.masts.test.SIMULATE_MCU_KEY_INPUT --eia key -63,1,2,3,4,5</string>
     <string name="settings_title_appearance">Appearance</string>
     <string name="settings_title_language">Language</string>
     <string name="settings_title_simulate_key_input">Simulate Key Input</string>
     <string name="settings_title_check_if_app_is_running">Send action only if running</string>
+    <string name="settings_title_media_applications">Media Applications</string>
     <string name="settings_title_show_toast_messages_for_media_actions">Show toast messages</string>
     <string name="settings_title_input_key_debounce_millis">Debounce Time [ms]</string>
     <string name="settings_title_binding_compare_method">Compare Method</string>
