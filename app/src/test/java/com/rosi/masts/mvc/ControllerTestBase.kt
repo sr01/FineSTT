@@ -38,8 +38,11 @@ open class ControllerTestBase {
         override val textFileReadWrite: TextFileReadWrite = mock()
         override val dateTimeProvider: DateTimeProvider = mock()
         override val volumeControl: VolumeControl = mock()
+        override val controller: Controller by lazy {
+            Controller(this)
+        }
     }
-    val controller: Controller = Controller(dependencyProvider)
+    val controller = dependencyProvider.controller
     val testActor = TestActor()
     val serviceActor = AppControlServiceActor(controller, controller.viewManager, "test/app-control-service", dependencyProvider.logger, dependencyProvider.generalScope)
 }

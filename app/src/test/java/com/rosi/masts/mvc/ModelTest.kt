@@ -1,10 +1,9 @@
 package com.rosi.masts.mvc
 
 import com.rosi.masts.mvc.model.ActionTypes
+import com.rosi.masts.mvc.model.keybinding.KeyActionBinding
 import com.rosi.masts.mvc.model.mcu.MCUInputKey
 import com.rosi.masts.mvc.model.mcu.McuToArmCommands
-import com.rosi.masts.mvc.view.android.activity.keybinding.ActionViewData
-import com.rosi.masts.mvc.view.android.activity.keybinding.ActionWithMultipleKeysViewData
 import com.rosi.masts.mvc.view.android.activity.keybinding.KeyBindingActivityActor
 import com.rosi.masts.mvc.view.android.activity.main.MainActivityActor
 import com.rosi.masts.test.onceWithTimeout
@@ -25,7 +24,7 @@ class ModelTest : ControllerTestBase() {
 
         val isServiceRunningCaptor = argumentCaptor<Boolean>()
         verify(listener, onceWithTimeout()).onServiceStatusChanged(isServiceRunningCaptor.capture())
-        verify(listener, onceWithTimeout()).onShowActions(any())
+        verify(listener, onceWithTimeout()).onShowBindings(any())
         assertFalse(isServiceRunningCaptor.firstValue)
 
         // service start
@@ -55,9 +54,9 @@ class ModelTest : ControllerTestBase() {
         // main activity: start
         mainActivityActor.addListener(listener)
 
-        val actionsCaptor = argumentCaptor<Collection<ActionWithMultipleKeysViewData>>()
+        val actionsCaptor = argumentCaptor<Collection<KeyActionBinding>>()
         verify(listener, onceWithTimeout()).onServiceStatusChanged(any())
-        verify(listener, onceWithTimeout()).onShowActions(actionsCaptor.capture())
+        verify(listener, onceWithTimeout()).onShowBindings(actionsCaptor.capture())
         assertEquals(0, actionsCaptor.firstValue.size)
         clearInvocations(listener)
 
@@ -69,10 +68,10 @@ class ModelTest : ControllerTestBase() {
         // main activity: start
         mainActivityActor.addListener(listener)
         verify(listener, onceWithTimeout()).onServiceStatusChanged(any())
-        verify(listener, onceWithTimeout()).onShowActions(actionsCaptor.capture())
-        val actionViewData = actionsCaptor.secondValue.first()
-        assertEquals(keyActionBinding.actionType, actionViewData.action)
-        assertEquals(keyActionBinding.key.displayName, actionViewData.keys.first().boundKeyName)
+        verify(listener, onceWithTimeout()).onShowBindings(actionsCaptor.capture())
+        val binging = actionsCaptor.secondValue.first()
+        assertEquals(keyActionBinding.actionType, binging.actionType)
+        assertEquals(keyActionBinding.key, binging.key)
     }
 
     @Test
@@ -83,9 +82,9 @@ class ModelTest : ControllerTestBase() {
         // main activity: start
         mainActivityActor.addListener(listener)
 
-        val actionsCaptor = argumentCaptor<Collection<ActionWithMultipleKeysViewData>>()
+        val actionsCaptor = argumentCaptor<Collection<KeyActionBinding>>()
         verify(listener, onceWithTimeout()).onServiceStatusChanged(any())
-        verify(listener, onceWithTimeout()).onShowActions(actionsCaptor.capture())
+        verify(listener, onceWithTimeout()).onShowBindings(actionsCaptor.capture())
         assertEquals(0, actionsCaptor.firstValue.size)
         clearInvocations(listener)
 
@@ -97,24 +96,24 @@ class ModelTest : ControllerTestBase() {
         // main activity: start
         mainActivityActor.addListener(listener)
         verify(listener, onceWithTimeout()).onServiceStatusChanged(any())
-        verify(listener, onceWithTimeout()).onShowActions(actionsCaptor.capture())
-        val actionViewData = actionsCaptor.secondValue.first()
-        assertEquals(createdKeyActionBinding.actionType, actionViewData.action)
-        assertEquals(createdKeyActionBinding.key.displayName, actionViewData.keys.first().boundKeyName)
+        verify(listener, onceWithTimeout()).onShowBindings(actionsCaptor.capture())
+        val binging = actionsCaptor.secondValue.first()
+        assertEquals(createdKeyActionBinding.actionType, binging.actionType)
+        assertEquals(createdKeyActionBinding.key, binging.key)
         clearInvocations(listener)
 
         // main activity: stop
         mainActivityActor.removeListener(listener)
 
-        val modifiedKeyActionBinding = modifyKeyBinding(actionViewData.keys.first().bindingID!!)
+        val modifiedKeyActionBinding = modifyKeyBinding(binging.id)
 
         // main activity: start
         mainActivityActor.addListener(listener)
         verify(listener, onceWithTimeout()).onServiceStatusChanged(any())
-        verify(listener, onceWithTimeout()).onShowActions(actionsCaptor.capture())
-        val modifiedActionViewData = actionsCaptor.thirdValue.first()
-        assertEquals(actionViewData.keys.first().bindingID, modifiedActionViewData.keys.first().bindingID)
-        assertEquals(modifiedKeyActionBinding.key.displayName, modifiedActionViewData.keys.first().boundKeyName)
+        verify(listener, onceWithTimeout()).onShowBindings(actionsCaptor.capture())
+        val modifiedBinding = actionsCaptor.thirdValue.first()
+        assertEquals(binging.id, modifiedBinding.id)
+        assertEquals(modifiedKeyActionBinding.key, modifiedBinding.key)
     }
 
     private fun modifyKeyBinding(bindingID: String): KeyBindingIDPair {
