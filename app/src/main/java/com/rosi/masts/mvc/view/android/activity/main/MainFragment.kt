@@ -39,17 +39,17 @@ import com.rosi.masts.utils.android.AndroidIntents
 class MainFragment : Fragment() {
 
     private val TAG = "MainFragment"
-    private lateinit var logger: Logger
-    private lateinit var settings: com.rosi.masts.mvc.model.settings.Settings
+    private val logger: Logger by lazy {
+        requireContext().dependencyProvider.logger
+    }
     private lateinit var binding: FragmentMainBinding
     private lateinit var actionsAdapter: ActionWithMultipleKeysAdapter
     private var isServiceRunning = false
     private lateinit var requestPermissionLauncher: ActivityResultLauncher<String>
     private val requiredPermission = Manifest.permission.WRITE_EXTERNAL_STORAGE
     private var pendingPermissionsAction: (() -> Unit?)? = null
-    private lateinit var mainViewModelFactory: MainViewModelFactory
     private val viewModel: MainViewModel by activityViewModels {
-        mainViewModelFactory
+        MainViewModelFactory(requireContext())
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -59,13 +59,6 @@ class MainFragment : Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        val dependencyProvider = context.applicationContext.dependencyProvider
-
-        logger = dependencyProvider.logger
-        val actor = dependencyProvider.controller.viewManager.mainActivityActor
-        settings = dependencyProvider.settings
-
-        mainViewModelFactory = MainViewModelFactory(actor, dependencyProvider.stringsProvider, dependencyProvider.logger)
 
         requestPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
             if (isGranted) {

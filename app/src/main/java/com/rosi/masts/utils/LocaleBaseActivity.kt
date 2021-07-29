@@ -10,7 +10,7 @@ abstract class LocaleBaseActivity : AppCompatActivity() {
 
     override fun attachBaseContext(newBase: Context?) {
         if (newBase != null) {
-            val language = newBase.applicationContext.dependencyProvider.settings.getUILanguage()
+            val language = newBase.dependencyProvider.settings.getUILanguage()
             val context = ContextWrapperUtils.wrap(newBase, Locale(language))
             super.attachBaseContext(context)
         } else {

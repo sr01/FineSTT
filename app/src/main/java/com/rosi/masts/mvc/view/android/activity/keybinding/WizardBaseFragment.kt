@@ -17,9 +17,10 @@ abstract class WizardBaseFragment : Fragment(), KeyBindingActivityActor.Listener
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        logger = context.applicationContext.dependencyProvider.logger
-        actor = context.applicationContext.dependencyProvider.controller.viewManager.keyBindingActivityActor
-        stringsProvider = context.applicationContext.dependencyProvider.stringsProvider
+        val deps = context.dependencyProvider
+        logger = deps.logger
+        actor = deps.controller.viewManager.keyBindingActivityActor
+        stringsProvider = deps.stringsProvider
 
         logger.d(TAG, "onAttach")
     }

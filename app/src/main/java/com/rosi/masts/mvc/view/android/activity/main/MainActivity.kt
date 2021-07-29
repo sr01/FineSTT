@@ -12,18 +12,17 @@ import com.rosi.masts.databinding.ActivityMainBinding
 import com.rosi.masts.utils.LocaleBaseActivity
 import kotlin.system.exitProcess
 
-
 class MainActivity : LocaleBaseActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
+    private lateinit var mainViewModel: MainViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         setSupportActionBar(binding.toolbarLayout.toolbar)
 
         val navController = findNavController(R.id.nav_host_fragment_content_main)

@@ -24,7 +24,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        val dependencyProvider = context.applicationContext.dependencyProvider
+        val dependencyProvider = context.dependencyProvider
         logger = dependencyProvider.logger
         settings = dependencyProvider.settings
     }
