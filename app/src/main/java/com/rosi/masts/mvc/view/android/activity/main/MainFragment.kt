@@ -24,7 +24,6 @@ import com.google.android.flexbox.JustifyContent
 import com.google.android.material.snackbar.Snackbar
 import com.rosi.masts.R
 import com.rosi.masts.databinding.FragmentMainBinding
-import com.rosi.masts.di.controller
 import com.rosi.masts.di.dependencyProvider
 import com.rosi.masts.mvc.view.android.activity.keybinding.ActionViewData
 import com.rosi.masts.mvc.view.android.activity.keybinding.ActionWithMultipleKeysViewData
@@ -63,7 +62,7 @@ class MainFragment : Fragment() {
         val dependencyProvider = context.applicationContext.dependencyProvider
 
         logger = dependencyProvider.logger
-        val actor = context.applicationContext.controller.viewManager.mainActivityActor
+        val actor = dependencyProvider.controller.viewManager.mainActivityActor
         settings = dependencyProvider.settings
 
         mainViewModelFactory = MainViewModelFactory(actor, dependencyProvider.stringsProvider, dependencyProvider.logger)

@@ -1,6 +1,5 @@
 package com.rosi.masts.mvc.view.android.service
 
-import android.app.Application
 import android.app.job.JobInfo
 import android.app.job.JobScheduler
 import android.content.BroadcastReceiver
@@ -8,7 +7,6 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import com.rosi.masts.MASApplication
-import com.rosi.masts.di.dependencyProvider
 import com.rosi.masts.utils.Logger
 import com.rosi.masts.utils.android.toPrettyString
 
@@ -30,7 +28,7 @@ class BootBroadcastReceiver : BroadcastReceiver() {
 
     private fun init(context: Context) {
         if (context.applicationContext is MASApplication) {
-            logger = (context.applicationContext as Application).dependencyProvider.logger
+            logger =  (context.applicationContext as MASApplication).dependencyProvider.logger
         }
     }
 

@@ -3,7 +3,6 @@ package com.rosi.masts.mvc.view.android.activity.keybinding
 import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import com.rosi.masts.di.controller
 import com.rosi.masts.di.dependencyProvider
 import com.rosi.masts.mvc.model.ActionTypes
 import com.rosi.masts.mvc.view.resources.StringsProvider
@@ -19,7 +18,7 @@ abstract class WizardBaseFragment : Fragment(), KeyBindingActivityActor.Listener
     override fun onAttach(context: Context) {
         super.onAttach(context)
         logger = context.applicationContext.dependencyProvider.logger
-        actor = context.applicationContext.controller.viewManager.keyBindingActivityActor
+        actor = context.applicationContext.dependencyProvider.controller.viewManager.keyBindingActivityActor
         stringsProvider = context.applicationContext.dependencyProvider.stringsProvider
 
         logger.d(TAG, "onAttach")

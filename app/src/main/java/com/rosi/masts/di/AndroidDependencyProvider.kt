@@ -1,6 +1,7 @@
 package com.rosi.masts.di
 
 import android.content.Context
+import com.rosi.masts.mvc.control.Controller
 import com.rosi.masts.mvc.model.media.MediaController
 import com.rosi.masts.mvc.model.settings.Settings
 import com.rosi.masts.mvc.view.android.media.MediaControlManager
@@ -77,5 +78,9 @@ class AndroidDependencyProvider(context: Context) : DependencyProvider {
 
     override val volumeControl: VolumeControl by lazy {
         AndroidVolumeControl(context)
+    }
+
+    override val controller: Controller by lazy {
+        Controller(this)
     }
 }

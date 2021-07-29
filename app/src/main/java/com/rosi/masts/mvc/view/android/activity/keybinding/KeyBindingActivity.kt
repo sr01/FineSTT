@@ -3,7 +3,6 @@ package com.rosi.masts.mvc.view.android.activity.keybinding
 import android.os.Bundle
 import androidx.navigation.navArgs
 import com.rosi.masts.databinding.ActivityKeybindingBinding
-import com.rosi.masts.di.controller
 import com.rosi.masts.di.dependencyProvider
 import com.rosi.masts.mvc.model.ActionTypes
 import com.rosi.masts.mvc.view.android.activity.keybinding.KeyBindingFragmentStateAdapter.Companion.SELECT_ACTION_FRAGMENT_INDEX
@@ -29,7 +28,7 @@ class KeyBindingActivity : LocaleBaseActivity(), KeyBindingActivityActor.Listene
         setSupportActionBar(viewBinding.toolbarLayout.toolbar)
 
         logger = application.dependencyProvider.logger
-        actor = application.controller.viewManager.keyBindingActivityActor
+        actor = application.dependencyProvider.controller.viewManager.keyBindingActivityActor
 
         actor.addListener(this)
         viewBinding.viewPager.adapter = KeyBindingFragmentStateAdapter(this)

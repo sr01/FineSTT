@@ -9,7 +9,6 @@ import com.rosi.masts.mvc.control.Controller
 class MASApplication : Application() {
 
     private val tag = "MASApplication"
-    lateinit var controller: Controller
 
     val dependencyProvider: DependencyProvider by lazy {
         AndroidDependencyProvider(this.applicationContext)
@@ -19,9 +18,5 @@ class MASApplication : Application() {
         super.onCreate()
 
         dependencyProvider.logger.d(tag, "onCreate")
-
-        controller = Controller(dependencyProvider)
     }
-
-
 }

@@ -7,7 +7,6 @@ import android.content.Intent
 import android.os.IBinder
 import android.os.Process
 import androidx.core.app.NotificationCompat
-import com.rosi.masts.di.controller
 import com.rosi.masts.di.dependencyProvider
 import com.rosi.masts.utils.Consts
 import com.rosi.masts.utils.Logger
@@ -26,14 +25,14 @@ class AppControlService : Service() {
 
         super.onCreate()
 
-        logger = application.dependencyProvider.logger
+        val deps = application.dependencyProvider
+        logger = deps.logger
         actor = AppControlServiceActor(
-            application.controller,
-            application.controller.viewManager,
+            deps.controller,
+            deps.controller.viewManager,
             "view-manager/app-control-service",
             logger,
             application.dependencyProvider.generalScope)
-
         logger.i(tag, "service created")
 
         actor.start()

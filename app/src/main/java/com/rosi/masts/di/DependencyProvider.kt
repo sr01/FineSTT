@@ -1,5 +1,6 @@
 package com.rosi.masts.di
 
+import com.rosi.masts.mvc.control.Controller
 import com.rosi.masts.mvc.model.media.MediaController
 import com.rosi.masts.mvc.model.settings.Settings
 import com.rosi.masts.mvc.view.resources.StringsProvider
@@ -36,4 +37,6 @@ interface DependencyProvider {
     val dateTimeProvider : DateTimeProvider
 
     val volumeControl : VolumeControl
+
+    val controller: Controller
 }
