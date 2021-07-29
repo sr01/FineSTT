@@ -14,6 +14,7 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.files.fileChooser
@@ -36,18 +37,21 @@ import com.rosi.masts.utils.Logger
 import com.rosi.masts.utils.android.AndroidIntents
 
 
-class MainFragment : Fragment(), MainActivityActor.Listener {
+class MainFragment : Fragment() {
 
     private val TAG = "MainFragment"
     private lateinit var logger: Logger
     private lateinit var settings: com.rosi.masts.mvc.model.settings.Settings
     private lateinit var binding: FragmentMainBinding
-    private lateinit var actor: MainActivityActor
     private lateinit var actionsAdapter: ActionWithMultipleKeysAdapter
     private var isServiceRunning = false
     private lateinit var requestPermissionLauncher: ActivityResultLauncher<String>
     private val requiredPermission = Manifest.permission.WRITE_EXTERNAL_STORAGE
     private var pendingPermissionsAction: (() -> Unit?)? = null
+    private lateinit var mainViewModelFactory: MainViewModelFactory
+    private val viewModel: MainViewModel by activityViewModels {
+        mainViewModelFactory
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,9 +61,12 @@ class MainFragment : Fragment(), MainActivityActor.Listener {
     override fun onAttach(context: Context) {
         super.onAttach(context)
         val dependencyProvider = context.applicationContext.dependencyProvider
+
         logger = dependencyProvider.logger
-        actor = context.applicationContext.controller.viewManager.mainActivityActor
+        val actor = context.applicationContext.controller.viewManager.mainActivityActor
         settings = dependencyProvider.settings
+
+        mainViewModelFactory = MainViewModelFactory(actor, dependencyProvider.stringsProvider, dependencyProvider.logger)
 
         requestPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
             if (isGranted) {
@@ -70,16 +77,6 @@ class MainFragment : Fragment(), MainActivityActor.Listener {
                 showPermissionRequestAndOpenApplicationDetailsSettings()
             }
         }
-    }
-
-    override fun onStart() {
-        super.onStart()
-        actor.addListener(this)
-    }
-
-    override fun onStop() {
-        super.onStop()
-        actor.removeListener(this)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -102,6 +99,10 @@ class MainFragment : Fragment(), MainActivityActor.Listener {
         binding.buttonStartService.setOnClickListener { toggleService() }
 
         binding.buttonAddBind.setOnClickListener { onAddBindingClick() }
+
+        viewModel.isServiceRunning.observe(viewLifecycleOwner, this::onServiceStatusChanged)
+        viewModel.actions.observe(viewLifecycleOwner, this::onShowActions)
+        viewModel.shareNotification.observe(viewLifecycleOwner, this::onShareBindings)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -169,7 +170,7 @@ class MainFragment : Fragment(), MainActivityActor.Listener {
         }
     }
 
-    override fun onServiceStatusChanged(isRunning: Boolean) {
+    private fun onServiceStatusChanged(isRunning: Boolean) {
         this.isServiceRunning = isRunning
 
         when (isRunning) {
@@ -184,27 +185,18 @@ class MainFragment : Fragment(), MainActivityActor.Listener {
         }
     }
 
-    override fun onShowActions(actionViewDataList: Collection<ActionWithMultipleKeysViewData>) {
+    private fun onShowActions(actionViewDataList: Collection<ActionWithMultipleKeysViewData>) {
         actionsAdapter.actions.clear()
-
         actionsAdapter.actions.addAll(actionViewDataList)
-
         actionsAdapter.notifyDataSetChanged()
-
         updateNoActionsView()
     }
 
-    override fun onActionsRemoved(bindingsIDs: Collection<String>) {
-        actionsAdapter.removeKeyBindings(bindingsIDs)
-
-        updateNoActionsView()
-    }
-
-    override fun onShareBindings(bindingsJson: String) {
+    private fun onShareBindings(bindingsJson: String) {
         if (bindingsJson.isEmpty()) {
             Toast.makeText(requireContext(), getString(R.string.share_bindings_message_when_no_bindings_exist), Toast.LENGTH_SHORT).show()
         } else {
-            startActivity(AndroidIntents.newShareIntent(bindingsJson,getString(R.string.share_bindings_subject)))
+            startActivity(AndroidIntents.newShareIntent(bindingsJson, getString(R.string.share_bindings_subject)))
         }
     }
 
@@ -225,7 +217,7 @@ class MainFragment : Fragment(), MainActivityActor.Listener {
     }
 
     private fun unbindAction(actionViewData: ActionViewData) {
-        actor.unbindAction(actionViewData)
+        viewModel.unbindAction(actionViewData)
     }
 
     private fun openNotificationSettings() {
@@ -241,7 +233,7 @@ class MainFragment : Fragment(), MainActivityActor.Listener {
     }
 
     private fun shareBindings() {
-        actor.shareBindings()
+        viewModel.shareBindings()
     }
 
     private fun importBindings() {
@@ -250,7 +242,7 @@ class MainFragment : Fragment(), MainActivityActor.Listener {
             val initialDirectory = AndroidTextFileReadWrite.getWorkingDirectory(context)
             MaterialDialog(context).show {
                 fileChooser(initialDirectory = initialDirectory, context = context) { dialog, file ->
-                    actor.importBindings(file)
+                    viewModel.importBindings(file)
                 }
             }
         }
@@ -258,7 +250,7 @@ class MainFragment : Fragment(), MainActivityActor.Listener {
 
     private fun exportBindings() {
         checkPermissions {
-            actor.exportBindings()
+            viewModel.exportBindings()
         }
     }
 

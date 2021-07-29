@@ -26,20 +26,6 @@ class ActionWithMultipleKeysAdapter(private val onItemSelectedListener: OnItemSe
 
     override fun getItemCount(): Int = actions.size
 
-    fun removeKeyBindings(bindingsIDs: Collection<String>) {
-        actions.forEachIndexed { index, action ->
-            val keys = action.keys.filter { bindingsIDs.contains(it.bindingID) }
-            if (keys.isNotEmpty()) {
-                action.keys.removeAll(keys)
-                notifyItemChanged(index)
-            }
-        }
-
-        val actionsWithNoKey = actions.filter { it.keys.isEmpty() }
-        actions.removeAll(actionsWithNoKey)
-        notifyDataSetChanged()
-    }
-
 //    fun getSelectedItem(): ActionViewData? {
 //        return actions.firstOrNull { it.isSelected }
 //    }

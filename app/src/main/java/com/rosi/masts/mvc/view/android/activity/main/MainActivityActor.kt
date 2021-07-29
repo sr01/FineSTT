@@ -10,18 +10,11 @@ import com.rosi.masts.mvc.model.keybinding.KeyActionBinding
 import com.rosi.masts.mvc.view.resources.StringsProvider
 import com.rosi.masts.mvc.view.ViewManager
 import com.rosi.masts.mvc.view.android.activity.keybinding.ActionViewData
-import com.rosi.masts.mvc.view.android.activity.keybinding.ActionWithMultipleKeysViewData
 import com.rosi.masts.utils.Logger
 import kotlinx.coroutines.CoroutineScope
 import java.io.File
 
-class MainActivityActor(
-    private val controller: Controller,
-    private val viewManager: ViewManager,
-    private val stringsProvider: StringsProvider,
-    name: String,
-    logger: Logger,
-    scope: CoroutineScope) : Actor(name, logger, scope) {
+class MainActivityActor(private val controller: Controller, private val viewManager: ViewManager, name: String, logger: Logger, scope: CoroutineScope) : Actor(name, logger, scope) {
 
     private val tag = "MainActivityActor"
     private var listeners = mutableListOf<Listener>()
@@ -38,6 +31,7 @@ class MainActivityActor(
             is RemoveKeyActionBindingMessage -> if (message.removedBindings != null) removeKeyActionBindingMessage(message, message.removedBindings)
             is ImportKeyBindingsMessage -> if (message.bindings != null) showActions(message.bindings)
             is ShareKeyBindingsMessage -> if (message.bindingsJson != null) shareKeyBindingsMessage(message.bindingsJson)
+            is BindSuccessMessage -> bindSuccessMessage(message.keyActionBinding)
             else -> printUnknownMessage(message)
         }
     }
@@ -81,31 +75,13 @@ class MainActivityActor(
     }
 
     private fun showActions(bindings: Collection<KeyActionBinding>) {
-
-        val keyActionViewDataList = bindings.map { binding ->
-            ActionViewData(
-                bindingID = binding.id,
-                displayName = stringsProvider.getDisplayNameForKeyActionType(binding.actionType),
-                action = binding.actionType,
-                isSelected = false,
-                boundKeyName = binding.key.displayName)
-        }
-
-        val actionViewMultipleKeysData = keyActionViewDataList.groupBy { it.action }
-            .map {
-                ActionWithMultipleKeysViewData(
-                    action = it.key,
-                    displayName = stringsProvider.getDisplayNameForKeyActionType(it.key),
-                    keys = it.value.toMutableList())
-            }
-
-        listeners.forEach { it.onShowActions(actionViewMultipleKeysData) }
+        listeners.forEach { it.onShowBindings(bindings) }
     }
 
     private fun removeKeyActionBindingMessage(message: RemoveKeyActionBindingMessage, removedBindings: Collection<KeyActionBinding>) {
         listeners.forEach { listener ->
             val removedBindingIDs = removedBindings.map { it.id }
-            listener.onActionsRemoved(removedBindingIDs)
+            listener.onBindingsRemoved(removedBindingIDs)
         }
     }
 
@@ -113,10 +89,15 @@ class MainActivityActor(
         listeners.forEach { it.onShareBindings(bindingsJson) }
     }
 
+    private fun bindSuccessMessage(keyActionBinding: KeyActionBinding) {
+        listeners.forEach { it.onBindingUpdated(keyActionBinding) }
+    }
+
     interface Listener {
         fun onServiceStatusChanged(isRunning: Boolean)
-        fun onShowActions(actions: Collection<ActionWithMultipleKeysViewData>)
-        fun onActionsRemoved(bindingsIDs: Collection<String>)
+        fun onShowBindings(bindings: Collection<KeyActionBinding>)
+        fun onBindingsRemoved(bindingsIDs: Collection<String>)
+        fun onBindingUpdated(binding: KeyActionBinding)
         fun onShareBindings(bindingsJson: String)
     }
 }

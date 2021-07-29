@@ -23,7 +23,7 @@ class ViewManager(controller: Controller, override val name: String, deps: Depen
     private val javaToJni: JavaToJni = deps.javaToJni
 
     val keyBindingActivityActor = KeyBindingActivityActor(controller, "view-manager/key-binding-activity-actor", logger, deps.mainScope)
-    val mainActivityActor = MainActivityActor(controller, this, deps.stringsProvider, "view-manager/main-activity-actor", logger, deps.mainScope)
+    val mainActivityActor = MainActivityActor(controller, this, "view-manager/main-activity-actor", logger, deps.generalScope)
 
     init {
         initJavaToJni()
@@ -51,7 +51,10 @@ class ViewManager(controller: Controller, override val name: String, deps: Depen
 
             is SelectKeyMessage -> this send message to keyBindingActivityActor
 
-            is BindSuccessMessage -> this send message to keyBindingActivityActor
+            is BindSuccessMessage -> {
+                this send message to keyBindingActivityActor
+                this send message to mainActivityActor
+            }
 
             is GetAvailableActionsMessage -> this send message to keyBindingActivityActor
 

@@ -66,7 +66,7 @@ data class RemoveKeyActionBindingMessage(override val sender: ISender = DefaultS
 
 data class GetKeyActionBindingsMessage(override val sender: ISender = DefaultSender, val bindings: Collection<KeyActionBinding>? = null, val recipient: ISender) : Message {
     override fun withSender(sender: ISender) = this.copy(sender = sender)
-    fun withActions(bindings: Collection<KeyActionBinding>) = this.copy(bindings = bindings)
+    fun withBindings(bindings: Collection<KeyActionBinding>) = this.copy(bindings = bindings)
 }
 
 data class GetAvailableActionsMessage(override val sender: ISender = DefaultSender, val actions: Collection<ActionTypes>? = null, val recipient: ISender) : Message {

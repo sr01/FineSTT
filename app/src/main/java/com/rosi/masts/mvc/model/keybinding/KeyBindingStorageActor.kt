@@ -71,7 +71,7 @@ open class KeyBindingStorageActor(private val controller: Controller,
 
     private fun getKeyActionBindingsMessage(message: GetKeyActionBindingsMessage) {
         val bindings = storage.getAll()
-        this send message.withActions(bindings) to message.recipient
+        this send message.withBindings(bindings) to message.recipient
     }
 
     private suspend fun startKeyBindingForActionMessage(message: StartKeyBindingForActionMessage, bindingID: String) {
@@ -94,7 +94,6 @@ open class KeyBindingStorageActor(private val controller: Controller,
     }
 
     private fun removeKeyActionBindingMessage(message: RemoveKeyActionBindingMessage, bindingID: String) {
-        logger.testPrint(tag, "removeKeyActionBindingMessage, bindingID: $bindingID")
         val removedBinding = storage.removeByID(bindingID)
         save()
         this send message.withRemovedBindings(listOfNotNull(removedBinding)) to controller
