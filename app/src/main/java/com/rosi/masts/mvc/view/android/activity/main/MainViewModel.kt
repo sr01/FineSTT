@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.rosi.masts.mvc.model.keybinding.KeyActionBinding
+import com.rosi.masts.mvc.view.MainActivityActor
 import com.rosi.masts.mvc.view.android.activity.keybinding.ActionViewData
 import com.rosi.masts.mvc.view.android.activity.keybinding.ActionWithMultipleKeysViewData
 import com.rosi.masts.mvc.view.resources.StringsProvider

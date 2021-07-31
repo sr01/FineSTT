@@ -3,15 +3,20 @@ package com.rosi.masts.mvc.view.android.activity.keybinding
 import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import com.rosi.masts.di.KeyBindingViewModelFactory
 import com.rosi.masts.di.dependencyProvider
-import com.rosi.masts.mvc.model.ActionTypes
+import com.rosi.masts.mvc.view.KeyBindingActivityActor
 import com.rosi.masts.mvc.view.resources.StringsProvider
 import com.rosi.masts.utils.Logger
 
-abstract class WizardBaseFragment : Fragment(), KeyBindingActivityActor.Listener {
+abstract class WizardBaseFragment : Fragment() {
     protected lateinit var logger: Logger
     protected lateinit var actor: KeyBindingActivityActor
     protected lateinit var stringsProvider: StringsProvider
+    protected val viewModel: KeyBindingViewModel by activityViewModels() {
+        KeyBindingViewModelFactory(requireContext())
+    }
 
     private val TAG = this::class.java.simpleName
 
@@ -38,13 +43,11 @@ abstract class WizardBaseFragment : Fragment(), KeyBindingActivityActor.Listener
     override fun onStart() {
         logger.d(TAG, "onStart")
         super.onStart()
-        actor.addListener(this)
     }
 
     override fun onStop() {
         logger.d(TAG, "onStop")
         super.onStop()
-        actor.removeListener(this)
     }
 
     override fun onResume() {
@@ -56,24 +59,5 @@ abstract class WizardBaseFragment : Fragment(), KeyBindingActivityActor.Listener
     override fun onPause() {
         super.onPause()
         logger.d(TAG, "onPause")
-    }
-
-    override fun onSelectAction(availableActions: Collection<ActionTypes>) {
-    }
-
-    override fun onSelectKey() {
-    }
-
-    override fun onKeyDetected(key: String, keyDetectedCount: Int) {
-    }
-
-    override fun onBindSuccess() {
-    }
-
-    override fun onBindComplete() {
-    }
-
-    override fun onAvailableActions(actions: Collection<ActionTypes>) {
-
     }
 }

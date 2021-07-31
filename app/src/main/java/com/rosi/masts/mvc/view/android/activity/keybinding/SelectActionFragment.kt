@@ -17,7 +17,11 @@ class SelectActionFragment : WizardBaseFragment() {
     private lateinit var actionsAdapter: ActionsAdapter
     private lateinit var viewBinding: FragmentSelectActionBinding
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         viewBinding = FragmentSelectActionBinding.inflate(inflater, container, false)
         return viewBinding.root
     }
@@ -37,6 +41,15 @@ class SelectActionFragment : WizardBaseFragment() {
         viewBinding.buttonNext.visibility = View.INVISIBLE
 
         viewBinding.buttonNext.setOnClickListener { onNextClick() }
+
+        viewModel.availableActions.observe(viewLifecycleOwner) { actions ->
+            refreshAvailableActions(actions)
+        }
+        viewModel.notifications.observe(viewLifecycleOwner) { notification ->
+            when (notification) {
+                is ViewNotification.Close -> actionsAdapter.clearSelection()
+            }
+        }
     }
 
     override fun onResume() {
@@ -75,16 +88,6 @@ class SelectActionFragment : WizardBaseFragment() {
         } else {
             viewBinding.textInstruction.text = getString(R.string.select_from_available_actions)
         }
-    }
-
-    override fun onBindComplete() {
-        super.onBindComplete()
-
-        actionsAdapter.clearSelection()
-    }
-
-    override fun onAvailableActions(actions: Collection<ActionTypes>){
-        refreshAvailableActions(actions)
     }
 
     private val TAG = "SelectActionFragment"

@@ -1,4 +1,4 @@
-package com.rosi.masts.mvc.view.android.activity.keybinding
+package com.rosi.masts.mvc.view
 
 import com.rosi.masts.base.actor.*
 import com.rosi.masts.mvc.*

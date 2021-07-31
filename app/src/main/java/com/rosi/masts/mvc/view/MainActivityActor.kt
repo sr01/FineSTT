@@ -1,4 +1,4 @@
-package com.rosi.masts.mvc.view.android.activity.main
+package com.rosi.masts.mvc.view
 
 import com.rosi.masts.base.actor.Actor
 import com.rosi.masts.base.actor.Message
@@ -7,8 +7,6 @@ import com.rosi.masts.base.actor.send
 import com.rosi.masts.mvc.*
 import com.rosi.masts.mvc.control.Controller
 import com.rosi.masts.mvc.model.keybinding.KeyActionBinding
-import com.rosi.masts.mvc.view.resources.StringsProvider
-import com.rosi.masts.mvc.view.ViewManager
 import com.rosi.masts.mvc.view.android.activity.keybinding.ActionViewData
 import com.rosi.masts.utils.Logger
 import kotlinx.coroutines.CoroutineScope

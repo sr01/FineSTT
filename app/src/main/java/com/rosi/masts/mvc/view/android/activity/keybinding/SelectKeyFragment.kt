@@ -11,7 +11,11 @@ import com.rosi.masts.utils.android.toast
 class SelectKeyFragment : WizardBaseFragment() {
     private lateinit var viewBinding: FragmentSelectKeyBinding
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         viewBinding = FragmentSelectKeyBinding.inflate(inflater, container, false)
         return viewBinding.root
     }
@@ -21,6 +25,10 @@ class SelectKeyFragment : WizardBaseFragment() {
 
         viewBinding.buttonNext.setOnClickListener { onNextClick() }
         resetView()
+
+        viewModel.detectedKey.observe(viewLifecycleOwner) { detectedKey ->
+            onKeyDetected(detectedKey.key, detectedKey.keyDetectedCount)
+        }
     }
 
     override fun onResume() {
@@ -28,10 +36,15 @@ class SelectKeyFragment : WizardBaseFragment() {
         (requireActivity() as KeyBindingActivity).setTitle(getString(R.string.key_binding_select_key_screen_title))
     }
 
-    override fun onKeyDetected(key: String, keyDetectedCount: Int) {
+    private fun onKeyDetected(key: String, keyDetectedCount: Int) {
         viewBinding.textKeyCount.text = keyDetectedCount.toString()
         viewBinding.textSelectedKey.text = key
-        viewBinding.textSelectedKey.setTextColor(resources.getColor(R.color.select_key_text_color, activity?.theme))
+        viewBinding.textSelectedKey.setTextColor(
+            resources.getColor(
+                R.color.select_key_text_color,
+                activity?.theme
+            )
+        )
         viewBinding.textSelectedKey.textDirection = View.TEXT_DIRECTION_LTR
         viewBinding.buttonNext.visibility = View.VISIBLE
     }
@@ -40,17 +53,16 @@ class SelectKeyFragment : WizardBaseFragment() {
         actor.keySelected()
     }
 
-    override fun onBindSuccess() {
-        super.onBindSuccess()
-
-        requireActivity().toast(getString(R.string.bind_success_message))
-    }
-
     private fun resetView() {
         viewBinding.textKeyCount.text = "0"
         viewBinding.textSelectedKey.textDirection = View.TEXT_DIRECTION_INHERIT
         viewBinding.textSelectedKey.text = getString(R.string.press_a_key_text)
-        viewBinding.textSelectedKey.setTextColor(resources.getColor(R.color.press_a_key_text_color, activity?.theme))
+        viewBinding.textSelectedKey.setTextColor(
+            resources.getColor(
+                R.color.press_a_key_text_color,
+                activity?.theme
+            )
+        )
         viewBinding.buttonNext.visibility = View.INVISIBLE
     }
 }

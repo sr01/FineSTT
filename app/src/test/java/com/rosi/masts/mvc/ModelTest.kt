@@ -4,8 +4,8 @@ import com.rosi.masts.mvc.model.ActionTypes
 import com.rosi.masts.mvc.model.keybinding.KeyActionBinding
 import com.rosi.masts.mvc.model.mcu.MCUInputKey
 import com.rosi.masts.mvc.model.mcu.McuToArmCommands
-import com.rosi.masts.mvc.view.android.activity.keybinding.KeyBindingActivityActor
-import com.rosi.masts.mvc.view.android.activity.main.MainActivityActor
+import com.rosi.masts.mvc.view.KeyBindingActivityActor
+import com.rosi.masts.mvc.view.MainActivityActor
 import com.rosi.masts.test.onceWithTimeout
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.*

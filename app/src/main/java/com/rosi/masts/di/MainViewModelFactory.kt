@@ -1,11 +1,9 @@
-package com.rosi.masts.mvc.view.android.activity.main
+package com.rosi.masts.di
 
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.rosi.masts.di.dependencyProvider
-import com.rosi.masts.mvc.view.resources.StringsProvider
-import com.rosi.masts.utils.Logger
+import com.rosi.masts.mvc.view.android.activity.main.MainViewModel
 import java.lang.IllegalArgumentException
 
 class MainViewModelFactory(private val context: Context) : ViewModelProvider.Factory {

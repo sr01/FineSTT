@@ -5,8 +5,6 @@ import com.rosi.masts.di.DependencyProvider
 import com.rosi.masts.mvc.*
 import com.rosi.masts.mvc.control.Controller
 import com.rosi.masts.mvc.model.media.MediaController
-import com.rosi.masts.mvc.view.android.activity.keybinding.KeyBindingActivityActor
-import com.rosi.masts.mvc.view.android.activity.main.MainActivityActor
 import com.rosi.masts.utils.Logger
 import com.rosi.masts.mvc.view.stt.JavaToJni
 import com.rosi.masts.mvc.view.stt.JniToJava
