@@ -3,7 +3,7 @@ package com.rosi.masts.utils.android
 import android.content.Context
 import android.os.Environment
 import android.widget.Toast
-import com.rosi.masts.utils.Logger
+import com.rosi.masts.base.Logger
 import com.rosi.masts.utils.TextFileReadWrite
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch

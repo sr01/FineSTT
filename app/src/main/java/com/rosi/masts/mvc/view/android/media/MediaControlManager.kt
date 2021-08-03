@@ -10,7 +10,7 @@ import com.rosi.masts.mvc.model.ActionTypes
 import com.rosi.masts.mvc.model.media.MediaController
 import com.rosi.masts.mvc.model.settings.Settings
 import com.rosi.masts.mvc.view.resources.StringsProvider
-import com.rosi.masts.utils.Logger
+import com.rosi.masts.base.Logger
 import com.rosi.masts.utils.VolumeControl
 import com.rosi.masts.utils.android.toast
 import kotlinx.coroutines.CoroutineScope

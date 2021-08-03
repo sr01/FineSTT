@@ -9,7 +9,7 @@ import com.rosi.masts.mvc.model.ModelManager
 import com.rosi.masts.mvc.model.mcu.MCUInputKey
 import com.rosi.masts.mvc.model.settings.Settings
 import com.rosi.masts.utils.DateTimeProvider
-import com.rosi.masts.utils.Logger
+import com.rosi.masts.base.Logger
 import com.rosi.masts.utils.TextFileReadWrite
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.serialization.*

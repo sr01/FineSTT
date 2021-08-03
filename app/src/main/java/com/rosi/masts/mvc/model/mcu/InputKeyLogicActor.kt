@@ -4,7 +4,7 @@ import com.rosi.masts.base.actor.*
 import com.rosi.masts.mvc.*
 import com.rosi.masts.mvc.control.Controller
 import com.rosi.masts.mvc.model.ModelManager
-import com.rosi.masts.utils.Logger
+import com.rosi.masts.base.Logger
 import com.rosi.masts.utils.toHexArrayString
 import kotlinx.coroutines.CoroutineScope
 

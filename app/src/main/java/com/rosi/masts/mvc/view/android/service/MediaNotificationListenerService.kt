@@ -7,7 +7,7 @@ import android.service.notification.NotificationListenerService
 import android.service.notification.StatusBarNotification
 import com.rosi.masts.di.dependencyProvider
 import com.rosi.masts.mvc.model.settings.Settings
-import com.rosi.masts.utils.Logger
+import com.rosi.masts.base.Logger
 import com.rosi.masts.utils.android.getMediaController
 import com.rosi.masts.utils.android.stateName
 

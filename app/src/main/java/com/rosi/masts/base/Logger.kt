@@ -1,4 +1,4 @@
-package com.rosi.masts.utils
+package com.rosi.masts.base
 
 interface Logger {
     fun e(tag: String, msg: String, e: Throwable? = null)

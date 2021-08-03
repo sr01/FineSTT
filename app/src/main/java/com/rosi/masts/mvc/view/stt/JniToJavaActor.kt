@@ -7,7 +7,7 @@ import com.rosi.masts.mvc.InputKeyMessage
 import com.rosi.masts.mvc.model.mcu.McuToArmCommands
 import com.rosi.masts.mvc.model.settings.Settings
 import com.rosi.masts.utils.ByteArrayUtils
-import com.rosi.masts.utils.Logger
+import com.rosi.masts.base.Logger
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

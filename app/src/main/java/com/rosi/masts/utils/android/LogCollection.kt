@@ -1,7 +1,7 @@
 package com.rosi.masts.utils.android
 
-import com.rosi.masts.utils.Logger
-import com.rosi.masts.utils.LoggerListener
+import com.rosi.masts.base.Logger
+import com.rosi.masts.base.LoggerListener
 
 class LogCollection(private val loggers: List<Logger>) : Logger {
 

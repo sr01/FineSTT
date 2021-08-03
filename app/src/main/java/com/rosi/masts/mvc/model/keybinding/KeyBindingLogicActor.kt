@@ -6,7 +6,7 @@ import com.rosi.masts.mvc.control.Controller
 import com.rosi.masts.mvc.model.*
 import com.rosi.masts.mvc.model.ActionTypes
 import com.rosi.masts.mvc.model.mcu.MCUInputKey
-import com.rosi.masts.utils.Logger
+import com.rosi.masts.base.Logger
 import com.rosi.masts.utils.ifNotNull
 import kotlinx.coroutines.CoroutineScope
 

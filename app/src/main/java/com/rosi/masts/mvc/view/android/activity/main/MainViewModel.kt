@@ -8,7 +8,7 @@ import com.rosi.masts.mvc.view.MainActivityActor
 import com.rosi.masts.mvc.view.android.activity.keybinding.ActionViewData
 import com.rosi.masts.mvc.view.android.activity.keybinding.ActionWithMultipleKeysViewData
 import com.rosi.masts.mvc.view.resources.StringsProvider
-import com.rosi.masts.utils.Logger
+import com.rosi.masts.base.Logger
 import kotlinx.coroutines.launch
 import java.io.File
 

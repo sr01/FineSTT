@@ -4,7 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.SystemClock
 import android.view.KeyEvent
-import com.rosi.masts.utils.Logger
+import com.rosi.masts.base.Logger
 
 class KeySender(private val context: Context, private val logger: Logger) {
     private val tag = "KeySender"

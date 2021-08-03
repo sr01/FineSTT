@@ -1,7 +1,7 @@
 package com.stt.JavaJni;
 
 import com.rosi.masts.utils.ByteArrayUtilsKt;
-import com.rosi.masts.utils.Logger;
+import com.rosi.masts.base.Logger;
 import com.rosi.masts.utils.android.AndroidLogger;
 import com.rosi.masts.mvc.view.stt.JniToJavaActor;
 

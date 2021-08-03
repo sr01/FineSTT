@@ -33,7 +33,7 @@ import com.rosi.masts.mvc.view.android.adapters.ActionWithMultipleKeysAdapter
 import com.rosi.masts.mvc.view.android.service.AppControlService
 import com.rosi.masts.mvc.view.android.service.MediaNotificationListenerService
 import com.rosi.masts.utils.android.AndroidTextFileReadWrite
-import com.rosi.masts.utils.Logger
+import com.rosi.masts.base.Logger
 import com.rosi.masts.utils.android.AndroidIntents
 
 

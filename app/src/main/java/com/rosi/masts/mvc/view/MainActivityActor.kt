@@ -8,7 +8,7 @@ import com.rosi.masts.mvc.*
 import com.rosi.masts.mvc.control.Controller
 import com.rosi.masts.mvc.model.keybinding.KeyActionBinding
 import com.rosi.masts.mvc.view.android.activity.keybinding.ActionViewData
-import com.rosi.masts.utils.Logger
+import com.rosi.masts.base.Logger
 import kotlinx.coroutines.CoroutineScope
 import java.io.File
 

@@ -1,6 +1,6 @@
 package com.rosi.masts.base.actor
 
-import com.rosi.masts.utils.Logger
+import com.rosi.masts.base.Logger
 import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.SendChannel
 

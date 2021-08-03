@@ -8,7 +8,7 @@ import com.rosi.masts.di.KeyBindingViewModelFactory
 import com.rosi.masts.di.dependencyProvider
 import com.rosi.masts.mvc.view.KeyBindingActivityActor
 import com.rosi.masts.mvc.view.resources.StringsProvider
-import com.rosi.masts.utils.Logger
+import com.rosi.masts.base.Logger
 
 abstract class WizardBaseFragment : Fragment() {
     protected lateinit var logger: Logger

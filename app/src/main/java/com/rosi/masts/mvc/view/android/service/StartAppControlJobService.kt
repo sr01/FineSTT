@@ -6,7 +6,7 @@ import android.content.Context
 import android.os.Build
 import com.rosi.masts.di.DependencyProvider
 import com.rosi.masts.di.dependencyProvider
-import com.rosi.masts.utils.Logger
+import com.rosi.masts.base.Logger
 
 class StartAppControlJobService : JobService() {
     private lateinit var deps: DependencyProvider

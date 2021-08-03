@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.IBinder;
 
-import com.rosi.masts.utils.Logger;
+import com.rosi.masts.base.Logger;
 import com.stt.cbmlib.uitl.OnServiceToClientListener;
 
 public abstract class BaseService extends Service implements OnServiceToClientListener {

@@ -9,7 +9,7 @@ import com.rosi.masts.mvc.StartInputKeyListening
 import com.rosi.masts.mvc.StopInputKeyListening
 import com.rosi.masts.mvc.control.Controller
 import com.rosi.masts.mvc.view.ViewManager
-import com.rosi.masts.utils.Logger
+import com.rosi.masts.base.Logger
 import kotlinx.coroutines.CoroutineScope
 
 class AppControlServiceActor(

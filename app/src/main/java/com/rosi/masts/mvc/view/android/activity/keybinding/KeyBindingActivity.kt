@@ -10,7 +10,7 @@ import com.rosi.masts.di.dependencyProvider
 import com.rosi.masts.mvc.view.android.activity.keybinding.KeyBindingFragmentStateAdapter.Companion.SELECT_ACTION_FRAGMENT_INDEX
 import com.rosi.masts.mvc.view.android.activity.keybinding.KeyBindingFragmentStateAdapter.Companion.SELECT_KEY_FRAGMENT_INDEX
 import com.rosi.masts.utils.LocaleBaseActivity
-import com.rosi.masts.utils.Logger
+import com.rosi.masts.base.Logger
 import com.rosi.masts.utils.android.toast
 
 class KeyBindingActivity : LocaleBaseActivity() {

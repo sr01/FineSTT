@@ -9,7 +9,7 @@ import android.os.Process
 import androidx.core.app.NotificationCompat
 import com.rosi.masts.di.dependencyProvider
 import com.rosi.masts.utils.Consts
-import com.rosi.masts.utils.Logger
+import com.rosi.masts.base.Logger
 import com.rosi.masts.utils.android.toPrettyString
 import com.rosi.masts.mvc.view.android.notifications.MASNotification
 

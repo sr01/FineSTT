@@ -1,6 +1,7 @@
 package com.rosi.masts.di
 
 import android.content.Context
+import com.rosi.masts.base.Logger
 import com.rosi.masts.mvc.control.Controller
 import com.rosi.masts.mvc.model.media.MediaController
 import com.rosi.masts.mvc.model.settings.Settings

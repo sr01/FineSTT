@@ -4,7 +4,7 @@ import android.app.ActivityManager
 import android.content.Context
 import android.os.Build
 import com.rosi.masts.mvc.view.android.service.MediaNotificationListenerService
-import com.rosi.masts.utils.Logger
+import com.rosi.masts.base.Logger
 import com.rosi.masts.utils.TerminalUtils
 
 class IsAppRunningUtils(private val context: Context, private val logger: Logger) {

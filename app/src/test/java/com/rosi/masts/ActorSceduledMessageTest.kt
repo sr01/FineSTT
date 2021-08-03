@@ -6,7 +6,7 @@ import junit.framework.Assert.assertEquals
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Test
 
-class ActorTest {
+class ActorSceduledMessageTest {
 
     @Test
     fun `cancel scheduled message`() = runBlockingTest {

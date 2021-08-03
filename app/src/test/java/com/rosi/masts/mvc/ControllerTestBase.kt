@@ -1,5 +1,6 @@
 package com.rosi.masts.mvc
 
+import com.rosi.masts.base.Logger
 import com.rosi.masts.di.DependencyProvider
 import com.rosi.masts.mvc.control.Controller
 import com.rosi.masts.mvc.model.ActionTypes

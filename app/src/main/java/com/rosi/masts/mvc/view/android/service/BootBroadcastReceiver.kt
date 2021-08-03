@@ -8,7 +8,7 @@ import android.content.Context
 import android.content.Intent
 import com.rosi.masts.MASApplication
 import com.rosi.masts.di.dependencyProvider
-import com.rosi.masts.utils.Logger
+import com.rosi.masts.base.Logger
 import com.rosi.masts.utils.android.toPrettyString
 
 class BootBroadcastReceiver : BroadcastReceiver() {

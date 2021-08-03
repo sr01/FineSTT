@@ -2,8 +2,8 @@ package com.rosi.masts.utils.android
 
 import android.content.Context
 import com.rosi.masts.BuildConfig
-import com.rosi.masts.utils.Logger
-import com.rosi.masts.utils.LoggerListener
+import com.rosi.masts.base.Logger
+import com.rosi.masts.base.LoggerListener
 import java.io.File
 import java.io.FileReader
 import java.io.FileWriter

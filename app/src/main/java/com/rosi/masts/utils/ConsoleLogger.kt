@@ -1,6 +1,8 @@
 package com.rosi.masts.utils
 
 import com.rosi.masts.BuildConfig
+import com.rosi.masts.base.Logger
+import com.rosi.masts.base.LoggerListener
 import com.rosi.masts.utils.android.AndroidLogger
 import java.text.SimpleDateFormat
 import java.util.*

@@ -4,7 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.rosi.masts.mvc.model.ActionTypes
 import com.rosi.masts.mvc.view.KeyBindingActivityActor
-import com.rosi.masts.utils.Logger
+import com.rosi.masts.base.Logger
 
 class KeyBindingViewModel(private val actor: KeyBindingActivityActor, private val logger: Logger) : ViewModel(),
     KeyBindingActivityActor.Listener {

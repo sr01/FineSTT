@@ -6,7 +6,7 @@ import android.content.Intent
 import android.content.IntentFilter
 import com.rosi.masts.mvc.view.stt.JniToJavaActor
 import com.rosi.masts.mvc.view.stt.JniToJava
-import com.rosi.masts.utils.Logger
+import com.rosi.masts.base.Logger
 import com.rosi.masts.utils.android.toPrettyString
 
 /**

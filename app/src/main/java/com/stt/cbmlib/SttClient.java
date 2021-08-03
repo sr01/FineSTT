@@ -13,7 +13,7 @@ import android.os.Looper;
 import android.os.Message;
 import android.os.RemoteException;
 
-import com.rosi.masts.utils.Logger;
+import com.rosi.masts.base.Logger;
 import com.rosi.masts.utils.android.BundleUtilsKt;
 import com.stt.cbmlib.aidl.ISttClient;
 import com.stt.cbmlib.aidl.ISttService;
