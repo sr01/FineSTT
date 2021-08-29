@@ -7,29 +7,35 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import com.rosi.masts.MASApplication
-import com.rosi.masts.di.dependencyProvider
 import com.rosi.masts.base.Logger
+import com.rosi.masts.di.DependencyProvider
+import com.rosi.masts.di.dependencyProvider
+import com.rosi.masts.mvc.model.settings.Settings
 import com.rosi.masts.utils.android.toPrettyString
 
 class BootBroadcastReceiver : BroadcastReceiver() {
     private val tag = "BootBroadcastReceiver"
     private val DELAY_START_JOB_ID = 1
-    private val MINIMUM_DELAY_START_MILLIS = 10000L
-    private val DEFAULT_DELAY_START_MILLIS = 30000L
     private var logger: Logger? = null
+    private var deps: DependencyProvider? = null
+    private var settings : Settings? = null
 
     override fun onReceive(context: Context, intent: Intent) {
         init(context)
 
         logger?.d(tag, "onReceive, intent: ${intent.toPrettyString()}")
 
-        val delay = MINIMUM_DELAY_START_MILLIS  //TODO: move to settings
-        scheduleJob(context, delay)
+        val delay = with(settings){
+            this?.getStartOnBootDelaySeconds() ?: DEFAULT_DELAY_START_SECONDS
+        }
+        scheduleJob(context, delay * 1000)
     }
 
     private fun init(context: Context) {
         if (context.applicationContext is MASApplication) {
-            logger =  context.dependencyProvider.logger
+            deps = context.dependencyProvider
+            logger = deps?.logger
+            settings = deps?.settings
         }
     }
 
@@ -42,5 +48,10 @@ class BootBroadcastReceiver : BroadcastReceiver() {
         val jobScheduler = context.getSystemService(Context.JOB_SCHEDULER_SERVICE) as JobScheduler
         val schedule = jobScheduler.schedule(jobInfo)
         logger?.d(tag, "scheduled a job of StartAppControlJobService, result: $schedule")
+    }
+
+    companion object {
+        const val MINIMUM_DELAY_START_SECONDS = 10L
+        const val DEFAULT_DELAY_START_SECONDS = 30L
     }
 }

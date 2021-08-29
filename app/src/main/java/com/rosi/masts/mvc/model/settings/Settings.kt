@@ -6,6 +6,10 @@ interface Settings {
 
     fun isServiceStartOnBootEnabled(): Boolean
 
+    fun getStartOnBootDelaySeconds() : Long
+
+    fun setStartOnBootDelaySeconds(millis: Long)
+
     fun setServiceStartOnBootEnabled(enabled: Boolean)
 
     fun getDisplayLogLevel(): LogLevel

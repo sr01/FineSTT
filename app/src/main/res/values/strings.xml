@@ -18,6 +18,7 @@
     <string name="key_action_types_volume_mute">Mute</string>
 
     <string name="settings_key_start_on_boot_enabled" translatable="false">start_on_boot_enabled</string>
+    <string name="settings_key_start_on_boot_delay_seconds" translatable="false">settings_key_start_on_boot_delay_seconds</string>
     <string name="settings_key_display_log_level" translatable="false">display_log_level</string>
     <string name="settings_key_input_key_debounce_millis" translatable="false">input_key_debounce_millis</string>
     <string name="settings_key_display_input_event_only" translatable="false">display_input_event_only</string>
@@ -40,6 +41,7 @@
     <string name="settings_title_input_key_debounce_millis">Debounce Time [ms]</string>
     <string name="settings_title_binding_compare_method">Compare Method</string>
     <string name="settings_title_start_on_boot_enabled">Start on boot</string>
+    <string name="settings_title_start_on_boot_delay">Start on boot delay [sec]</string>
     <string name="settings_title_multiple_keys_per_action_allowed">Multiple keys per action</string>
     <string name="settings_preference_category_boot">Boot</string>
     <string name="settings_preference_category_keys">Keys</string>

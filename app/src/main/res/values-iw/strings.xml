@@ -13,6 +13,7 @@
     <string name="settings_title_input_key_debounce_millis">זמן השהייה בין לחיצות [ms]</string>
     <string name="settings_title_binding_compare_method">שיטת השוואה</string>
     <string name="settings_title_start_on_boot_enabled">הפעל אוטומטית באיתחול</string>
+    <string name="settings_title_start_on_boot_delay">זמן המתנה לפני הפעלה [שניות]</string>
     <string name="settings_title_multiple_keys_per_action_allowed">מספר מקשים לפעולה</string>
     <string name="settings_preference_category_boot">איתחול</string>
     <string name="settings_preference_category_keys">מקשים</string>

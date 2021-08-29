@@ -15,7 +15,12 @@
             android:key="@string/settings_key_start_on_boot_enabled"
             android:title="@string/settings_title_start_on_boot_enabled" />
 
-
+        <EditTextPreference
+            android:defaultValue="30"
+            android:inputType="number"
+            android:key="@string/settings_key_start_on_boot_delay_seconds"
+            android:title="@string/settings_title_start_on_boot_delay"
+            app:useSimpleSummaryProvider="true" />
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/settings_preference_category_keys">

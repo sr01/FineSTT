@@ -7,12 +7,19 @@ import com.rosi.masts.mvc.model.keybinding.KeyBindingCompareMethod
 import com.rosi.masts.mvc.model.settings.LogLevel
 import com.rosi.masts.mvc.model.settings.MediaApplication
 import com.rosi.masts.mvc.model.settings.Settings
+import com.rosi.masts.mvc.view.android.service.BootBroadcastReceiver
 import java.util.*
 
-class SharedPreferencesSettings(private val resources: Resources, private val prefs: SharedPreferences) : Settings {
+class SharedPreferencesSettings(
+    private val resources: Resources,
+    private val prefs: SharedPreferences
+) : Settings {
 
     override fun isServiceStartOnBootEnabled(): Boolean {
-        return prefs.getBoolean(resources.getString(R.string.settings_key_start_on_boot_enabled), false)
+        return prefs.getBoolean(
+            resources.getString(R.string.settings_key_start_on_boot_enabled),
+            false
+        )
     }
 
     override fun setServiceStartOnBootEnabled(enabled: Boolean) {
@@ -22,7 +29,10 @@ class SharedPreferencesSettings(private val resources: Resources, private val pr
     }
 
     override fun getDisplayLogLevel(): LogLevel {
-        return LogLevel.values()[prefs.getInt(resources.getString(R.string.settings_key_display_log_level), LogLevel.Info.ordinal)]
+        return LogLevel.values()[prefs.getInt(
+            resources.getString(R.string.settings_key_display_log_level),
+            LogLevel.Info.ordinal
+        )]
     }
 
     override fun setDisplayLogLevel(level: LogLevel) {
@@ -33,16 +43,25 @@ class SharedPreferencesSettings(private val resources: Resources, private val pr
 
     override fun setInputKeyDebounceMillis(millis: Long) {
         prefs.edit()
-            .putString(resources.getString(R.string.settings_key_input_key_debounce_millis), millis.toString())
+            .putString(
+                resources.getString(R.string.settings_key_input_key_debounce_millis),
+                millis.toString()
+            )
             .apply()
     }
 
     override fun getInputKeyDebounceMillis(): Long {
-        return prefs.getString(resources.getString(R.string.settings_key_input_key_debounce_millis), "350")!!.toLong()
+        return prefs.getString(
+            resources.getString(R.string.settings_key_input_key_debounce_millis),
+            "350"
+        )!!.toLong()
     }
 
     override fun getDisplayKeyInputEventsOnly(): Boolean {
-        return prefs.getBoolean(resources.getString(R.string.settings_key_display_input_event_only), false)
+        return prefs.getBoolean(
+            resources.getString(R.string.settings_key_display_input_event_only),
+            false
+        )
     }
 
     override fun setDisplayKeyInputEventsOnly(value: Boolean) {
@@ -62,22 +81,34 @@ class SharedPreferencesSettings(private val resources: Resources, private val pr
     }
 
     override fun getKeyBindingCompareMethod(): KeyBindingCompareMethod {
-        val index = prefs.getString(resources.getString(R.string.settings_key_binding_compare_method), KeyBindingCompareMethod.b345.ordinal.toString())!!.toInt()
+        val index = prefs.getString(
+            resources.getString(R.string.settings_key_binding_compare_method),
+            KeyBindingCompareMethod.b345.ordinal.toString()
+        )!!.toInt()
         return KeyBindingCompareMethod.values()[index]
     }
 
     override fun setKeyBindingCompareMethod(method: KeyBindingCompareMethod) {
         prefs.edit()
-            .putString(resources.getString(R.string.settings_key_binding_compare_method), method.ordinal.toString())
+            .putString(
+                resources.getString(R.string.settings_key_binding_compare_method),
+                method.ordinal.toString()
+            )
             .apply()
     }
 
     override fun isSimulateKeyInputEnabled(): Boolean {
-        return prefs.getBoolean(resources.getString(R.string.settings_key_simulate_key_input), false)
+        return prefs.getBoolean(
+            resources.getString(R.string.settings_key_simulate_key_input),
+            false
+        )
     }
 
     override fun checkIfAppIsRunningEnabled(): Boolean {
-        return prefs.getBoolean(resources.getString(R.string.settings_key_check_if_app_is_running), true)
+        return prefs.getBoolean(
+            resources.getString(R.string.settings_key_check_if_app_is_running),
+            true
+        )
     }
 
     override fun setCheckIfAppIsRunningEnabled(enabled: Boolean) {
@@ -87,34 +118,65 @@ class SharedPreferencesSettings(private val resources: Resources, private val pr
     }
 
     override fun showToastMessagesForMediaActionsEnabled(): Boolean {
-        return prefs.getBoolean(resources.getString(R.string.settings_key_show_toast_messages_for_media_actions), true)
+        return prefs.getBoolean(
+            resources.getString(R.string.settings_key_show_toast_messages_for_media_actions),
+            true
+        )
     }
 
     override fun setShowToastMessagesForMediaActionsEnabled(enabled: Boolean) {
         prefs.edit()
-            .putBoolean(resources.getString(R.string.settings_key_show_toast_messages_for_media_actions), enabled)
+            .putBoolean(
+                resources.getString(R.string.settings_key_show_toast_messages_for_media_actions),
+                enabled
+            )
             .apply()
     }
 
     override fun getUILanguage(): String {
-        return prefs.getString(resources.getString(R.string.settings_key_ui_language), Locale.getDefault().language)!!
+        return prefs.getString(
+            resources.getString(R.string.settings_key_ui_language),
+            Locale.getDefault().language
+        )!!
     }
 
     override fun isMultipleKeysPerActionAllowed(): Boolean {
-        return prefs.getBoolean(resources.getString(R.string.settings_key_multiple_keys_per_action_allowed), false)
+        return prefs.getBoolean(
+            resources.getString(R.string.settings_key_multiple_keys_per_action_allowed),
+            false
+        )
     }
 
     override fun setMultipleKeysPerActionAllowed(allowed: Boolean) {
         prefs.edit()
-            .putBoolean(resources.getString(R.string.settings_key_multiple_keys_per_action_allowed), allowed)
+            .putBoolean(
+                resources.getString(R.string.settings_key_multiple_keys_per_action_allowed),
+                allowed
+            )
             .apply()
     }
 
     override fun getMediaApplications(): List<MediaApplication> {
-        return prefs.getStringSet(resources.getString(R.string.settings_key_media_applications), emptySet())!!
+        return prefs.getStringSet(
+            resources.getString(R.string.settings_key_media_applications),
+            emptySet()
+        )!!
             .map { string ->
                 val fields = string.split("/")
                 MediaApplication(fields[0], fields[1])
             }
+    }
+
+    override fun getStartOnBootDelaySeconds(): Long {
+        return prefs.getString(
+            resources.getString(R.string.settings_key_start_on_boot_delay_seconds),
+            BootBroadcastReceiver.DEFAULT_DELAY_START_SECONDS.toString()
+        )!!.toLong()
+    }
+
+    override fun setStartOnBootDelaySeconds(millis: Long) {
+        prefs.edit()
+            .putString(resources.getString(R.string.settings_key_start_on_boot_delay_seconds), millis.toString())
+            .apply()
     }
 }
